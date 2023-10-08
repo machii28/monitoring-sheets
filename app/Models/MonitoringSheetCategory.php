@@ -5,6 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MonitoringSheetCategory extends Model
 {
@@ -17,4 +18,9 @@ class MonitoringSheetCategory extends Model
         'category',
         'abbreviation'
     ];
+
+    public function monitoringSheets(): HasMany
+    {
+        return $this->hasMany(MonitoringSheet::class, 'category_id', 'id');
+    }
 }

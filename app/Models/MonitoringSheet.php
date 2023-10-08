@@ -22,10 +22,12 @@ class MonitoringSheet extends Model
         'coverage',
         'year_quarter',
         'prepared_by',
+        'prepared_by_role',
         'checked_by',
+        'checked_by_role',
         'user_id',
         'area_id',
-        'process'
+        'process_id'
     ];
 
     public function creator(): BelongsTo
@@ -46,5 +48,10 @@ class MonitoringSheet extends Model
     public function area(): BelongsTo
     {
         return $this->belongsTo(Area::class, 'area_id', 'id');
+    }
+
+    public function process(): BelongsTo
+    {
+        return $this->belongsTo(Process::class, 'process_id', 'id');
     }
 }

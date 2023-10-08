@@ -25,7 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'area_id'
+        'area_id',
+        'process_id'
     ];
 
     /**
@@ -51,5 +52,10 @@ class User extends Authenticatable
     public function area(): BelongsTo
     {
         return $this->belongsTo(Area::class, 'area_id');
+    }
+
+    public function process(): BelongsTo
+    {
+        return $this->belongsTo(Process::class, 'process_id');
     }
 }

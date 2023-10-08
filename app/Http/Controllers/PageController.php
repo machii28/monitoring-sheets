@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignedMonitoringSheet;
 use App\Models\MonitoringSheet;
+use App\Models\MonitoringSheetAnswer;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -11,8 +13,44 @@ class PageController extends Controller
     {
         $data = [];
 
-        $data['monitoringSheets'] = MonitoringSheet::where('area_id', auth()->user()->area_id)->get();
+        $data['monitoringSheets'] = AssignedMonitoringSheet::where('assigned_id', auth()->id())
+            ->get();
 
         return view('monitoring-sheets', $data);
+    }
+
+    public function answer($monitoringSheetId)
+    {
+        $monitoringSheet = MonitoringSheet::find($monitoringSheetId);
+
+        $data['monitoringSheet'] = $monitoringSheet;
+
+        return view('answer', $data);
+    }
+
+    public function submitAnswer($monitoringSheetId, Request $request)
+    {
+        $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
+                                    ->where('assigned_id', auth()->id())
+                                    ->first();
+
+        foreach ($request->get('answers') as $questionId => $answer) {
+            MonitoringSheetAnswer::updateOrCreate([
+                'assigned_monitoring_sheet_id' => $assignedMonitoringSheet->id,
+                'question_id' => $questionId
+            ], [
+                'assigned_monitoring_sheet_id' => $assignedMonitoringSheet->id,
+                'question_id' => $questionId,
+                'status' => $answer['status'],
+                'remarks' => $answer['remarks'],
+                'root_cause' => $answer['root_cause'],
+                'corrective_action' => $answer['corrective_action']
+            ]);
+        }
+
+        $assignedMonitoringSheet->is_filled_up = true;
+        $assignedMonitoringSheet->save();
+
+        return redirect()->route('po.monitoring-sheets', ['monitoringSheetId' => $monitoringSheetId]);
     }
 }

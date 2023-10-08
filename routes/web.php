@@ -20,7 +20,18 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $nonFilledUpMonitoringSheets = \App\Models\AssignedMonitoringSheet::where('assigned_id', auth()->id())
+                                    ->where('is_filled_up', 0)
+                                    ->count();
+
+    $filledUpMonitoringSheets = \App\Models\AssignedMonitoringSheet::where('assigned_id', auth()->id())
+                                    ->where('is_filled_up', 1)
+                                    ->count();
+
+    return view('dashboard', [
+        'filled_up_count' => $filledUpMonitoringSheets,
+        'non_filled_up_count' => $nonFilledUpMonitoringSheets
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -29,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('monitoring-sheets', [PageController::class, 'monitoringSheets'])->name('po.monitoring-sheets');
+
+    Route::get('/{monitoringSheetId}/answer-monitoring-sheet', [PageController::class, 'answer'])->name('po.answer.monitoring-sheet');
+    Route::post('/{monitoringSheetId}/submit-answer', [PageController::class, 'submitAnswer'])->name('po.submit-answer.monitoring-sheet');
 });
 
 require __DIR__.'/auth.php';

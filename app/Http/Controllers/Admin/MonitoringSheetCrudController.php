@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Operations\AssignMonitoringSheetOperation;
 use App\Http\Controllers\Admin\Operations\QuestionsOperation;
 use App\Http\Requests\MonitoringSheetRequest;
+use App\Models\MonitoringSheetCategory;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -42,6 +44,36 @@ class MonitoringSheetCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // set columns from db columns.
+
+        $this->crud->setColumnDetails('category_id', [
+            'label' => 'Category',
+            'type' => 'select',
+            'entity' => 'category',
+            'attribute' => 'abbreviation',
+            'model' => 'App\Models\MonitoringSheetCategory'
+        ]);
+
+        $this->crud->setColumnDetails('area_id', [
+            'label' => 'Area',
+            'type' => 'select',
+            'entity' => 'area',
+            'attribute' => 'name',
+            'model' => 'App\Models\Area'
+        ]);
+
+        $this->crud->setColumnDetails('process_id', [
+            'label' => 'Process',
+            'type' => 'select',
+            'entity' => 'process',
+            'attribute' => 'name',
+            'model' => 'App\Models\Process'
+        ]);
+
+        CRUD::column('user_id')->remove();
+        CRUD::column('prepared_by')->remove();
+        CRUD::column('prepared_by_role')->remove();
+        CRUD::column('checked_by')->remove();
+        CRUD::column('checked_by_role')->remove();
 
         /**
          * Columns can be defined using the fluent syntax:
@@ -88,6 +120,15 @@ class MonitoringSheetCrudController extends CrudController
             'options' => (function ($query) {
                 return $query->orderBy('name', 'ASC')->get();
             })
+        ]);
+
+        $this->crud->field([
+            'label' => 'Process',
+            'type' => 'select',
+            'name' => 'process_id',
+            'entity' => 'process',
+            'model' => 'App\Models\Process',
+            'attribute' => 'name'
         ]);
     }
 

@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Controllers\Admin\Operations\AssignMonitoringSheetOperation;
+use App\Http\Requests\ProcessOwnerRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class UserCrudController
+ * Class ProcessOwnerCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class UserCrudController extends CrudController
+class ProcessOwnerCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation { index as traitIndex; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use AssignMonitoringSheetOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -27,8 +29,15 @@ class UserCrudController extends CrudController
     public function setup()
     {
         CRUD::setModel(\App\Models\User::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/user');
-        CRUD::setEntityNameStrings('user', 'users');
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/process-owner');
+        CRUD::setEntityNameStrings('process owner', 'process owners');
+    }
+
+    public function index()
+    {
+        $this->crud->removeAllButtonsFromStack('top');
+
+        return $this->traitIndex();
     }
 
     /**
@@ -40,6 +49,14 @@ class UserCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // set columns from db columns.
+
+        CRUD::denyAccess('delete');
+        CRUD::denyAccess('update');
+        CRUD::denyAccess('show');
+
+        $this->crud->addClause(function ($query) {
+            $query->where('role', 'po');
+        });
 
         $this->crud->setColumnDetails('process_id', [
             'label' => 'Process',
@@ -57,19 +74,7 @@ class UserCrudController extends CrudController
             'model' => 'App\Models\Area'
         ]);
 
-        $this->crud->setColumnDetails('role', [
-            'label' => 'Role',
-            'type' => 'select_from_array',
-            'options' => [
-                'qao' => 'QMR',
-                'po' => 'Process Owner',
-                'qa' => 'QA Coordinator / Admin'
-            ]
-        ]);
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
+        CRUD::column('role')->remove();
     }
 
     /**
@@ -80,39 +85,13 @@ class UserCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(UserRequest::class);
-
+        CRUD::setValidation(ProcessOwnerRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
 
-        CRUD::field('role')
-            ->type('select_from_array')
-            ->label('User Role')
-            ->options([
-                'qao' => 'QMR',
-                'po' => 'Process Owner',
-                'qa' => 'QA Coordinator / Admin'
-            ]);
-
-        $this->crud->field([
-            'label' => 'Area',
-            'type' => 'select',
-            'name' => 'area_id',
-            'entity' => 'area',
-            'model' => 'App\Models\Area',
-            'attribute' => 'name',
-            'options' => (function ($query) {
-                return $query->orderBy('name', 'ASC')->get();
-            })
-        ]);
-
-        $this->crud->field([
-            'label' => 'Process',
-            'type' => 'select',
-            'name' => 'process_id',
-            'entity' => 'process',
-            'model' => 'App\Models\Process',
-            'attribute' => 'name'
-        ]);
+        /**
+         * Fields can be defined using the fluent syntax:
+         * - CRUD::field('price')->type('number');
+         */
     }
 
     /**

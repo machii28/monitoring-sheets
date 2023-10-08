@@ -5,3 +5,5 @@
 <x-backpack::menu-item title="Monitoring Sheets Category" icon="la la-clipboard" :link="backpack_url('monitoring-sheet-category')" />
 <x-backpack::menu-item title="Users" icon="la la-user" :link="backpack_url('user')" />
 <x-backpack::menu-item title="Areas" icon="la la-users" :link="backpack_url('area')" />
+<x-backpack::menu-item title="Processes" icon="la la-gear" :link="backpack_url('process')" />
+<x-backpack::menu-item title="Process owners" icon="la la-id-badge" :link="backpack_url('process-owner')" />

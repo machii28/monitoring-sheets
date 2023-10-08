@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MonitoringSheetRequest extends FormRequest
+class ProcessRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +25,7 @@ class MonitoringSheetRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'category_id' => 'required',
-            'area_id' => 'required',
-            'division' => 'required',
-            'coverage' => 'required',
-            'year_quarter' => 'required',
-            'prepared_by' => 'required',
-            'checked_by' => 'required',
-            'process_id' => 'required'
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 
