@@ -70,7 +70,8 @@ return new class extends Migration
             $table->index('process_id');
             $table->foreign('process_id')
                 ->references('id')
-                ->on('processes');
+                ->on('processes')
+                ->onDelete('cascade');
         });
     }
 

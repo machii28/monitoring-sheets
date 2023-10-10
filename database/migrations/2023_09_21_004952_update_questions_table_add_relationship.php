@@ -16,7 +16,8 @@ return new class extends Migration
             $table->index('monitoring_sheet_id');
             $table->foreign('monitoring_sheet_id')
                 ->references('id')
-                ->on('monitoring_sheets');
+                ->on('monitoring_sheets')
+                ->onDelete('cascade');
         });
     }
 

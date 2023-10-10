@@ -18,7 +18,8 @@ return new class extends Migration
             $table->index('area_id');
             $table->foreign('area_id')
                 ->references('id')
-                ->on('areas');
+                ->on('areas')
+                ->onDelete('cascade');
         });
     }
 
