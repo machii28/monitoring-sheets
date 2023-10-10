@@ -5,13 +5,15 @@
     $totalSheets = \App\Models\AssignedMonitoringSheet::count();
     $progress = $totalSheets ? ($submittedSheets/$totalSheets) * 100 : 0;
 
-    $widgets['after_content'][] = [
-        'type'        => 'progress',
-        'class'       => 'card text-white bg-primary mb-2',
-        'value'       => $submittedSheets,
-        'description' => 'Submitted Sheets',
-        'progress'    => $progress, // integer
-        'hint'        => "$totalSheets remaining un-submitted monitoring sheets",
+    $widgets['after_content'] = [
+        [
+            'type'        => 'progress',
+            'class'       => 'card text-white bg-primary mb-2',
+            'value'       => $submittedSheets,
+            'description' => 'Submitted Sheets',
+            'progress'    => $progress, // integer
+            'hint'        => "$totalSheets remaining un-submitted monitoring sheets",
+        ]
     ];
 @endphp
 
