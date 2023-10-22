@@ -74,6 +74,13 @@ class ProcessOwnerCrudController extends CrudController
             'model' => 'App\Models\Area'
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'total_assigned_ms',
+            'label' => 'Total Assigned Monitoring Sheets',
+            'type' => 'number',
+            'attribute' => 'total_assigned_ms'
+        ]);
+
         CRUD::column('role')->remove();
     }
 

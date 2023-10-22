@@ -16,9 +16,8 @@ class MonitoringSheet extends Model
     protected $table = 'monitoring_sheets';
 
     protected $fillable = [
-        'title',
         'category_id',
-        'division',
+        'division_id',
         'coverage',
         'year_quarter',
         'prepared_by',
@@ -53,5 +52,59 @@ class MonitoringSheet extends Model
     public function process(): BelongsTo
     {
         return $this->belongsTo(Process::class, 'process_id', 'id');
+    }
+
+    public function division(): BelongsTo
+    {
+        return $this->belongsTo(Division::class, 'division_id', 'id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $yearQuarter = '1st Quarter - ' . now()->format('Y');
+
+            switch ($model->coverage) {
+                case 1:
+                    $yearQuarter = '1st Quarter - ' . now()->format('Y');
+                    break;
+                case 2:
+                    $yearQuarter = '2nd Quarter - ' . now()->format('Y');
+                    break;
+                case 3:
+                    $yearQuarter = '3rd Quarter - ' . now()->format('Y');
+                    break;
+                case 4:
+                    $yearQuarter = '4th Quarter - '. now()->format('Y');
+                    break;
+            }
+
+            $model->year_quarter = $yearQuarter;
+
+        });
+
+        static::updating(function ($model) {
+            $yearQuarter = '1st Quarter - ' . now()->format('Y');
+
+            switch ($model->coverage) {
+                case 1:
+                    $yearQuarter = '1st Quarter - ' . now()->format('Y');
+                    break;
+                case 2:
+                    $yearQuarter = '2nd Quarter - ' . now()->format('Y');
+                    break;
+                case 3:
+                    $yearQuarter = '3rd Quarter - ' . now()->format('Y');
+                    break;
+                case 4:
+                    $yearQuarter = '4th Quarter - '. now()->format('Y');
+                    break;
+            }
+
+            $model->year_quarter = $yearQuarter;
+
+        });
     }
 }

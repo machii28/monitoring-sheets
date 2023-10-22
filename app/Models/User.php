@@ -58,4 +58,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Process::class, 'process_id');
     }
+
+    public function totalAssignedMS(): int
+    {
+        return AssignedMonitoringSheet::where('assigned_id', $this->id)
+            ->count();
+    }
+
+    public function getTotalAssignedMsAttribute()
+    {
+        return $this->totalAssignedMS();
+    }
 }

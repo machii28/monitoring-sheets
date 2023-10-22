@@ -61,12 +61,31 @@ class MonitoringSheetCrudController extends CrudController
             'model' => 'App\Models\Area'
         ]);
 
+        $this->crud->setColumnDetails('division_id', [
+            'label' => 'Division',
+            'type' => 'select',
+            'entity' => 'division',
+            'attribute' => 'name',
+            'model' => 'App\Models\Division'
+        ]);
+
         $this->crud->setColumnDetails('process_id', [
             'label' => 'Process',
             'type' => 'select',
             'entity' => 'process',
             'attribute' => 'name',
             'model' => 'App\Models\Process'
+        ]);
+
+        $this->crud->setColumnDetails('coverage', [
+            'label' => 'Coverage',
+            'type' => 'select_from_array',
+            'options' => [
+                '1' => 'January - March',
+                '2' => 'April - June',
+                '3' => 'July - September',
+                '4' => 'October - December'
+            ]
         ]);
 
         CRUD::column('user_id')->remove();
@@ -90,7 +109,6 @@ class MonitoringSheetCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(MonitoringSheetRequest::class);
-        CRUD::setFromDb();
 
         $this->crud->field([
             'label' => 'Category',
@@ -105,9 +123,12 @@ class MonitoringSheetCrudController extends CrudController
         ]);
 
         $this->crud->field([
-            'name' => 'user_id',
-            'type' => 'hidden',
-            'value' => backpack_auth()->user()->id
+            'label' => 'Division',
+            'type' => 'select',
+            'name' => 'division_id',
+            'entity' => 'division',
+            'model' => 'App\Models\Division',
+            'attribute' => 'name'
         ]);
 
         $this->crud->field([
@@ -129,6 +150,48 @@ class MonitoringSheetCrudController extends CrudController
             'entity' => 'process',
             'model' => 'App\Models\Process',
             'attribute' => 'name'
+        ]);
+
+        $this->crud->field([
+            'label' => 'Coverage',
+            'type' => 'select_from_array',
+            'name' => 'coverage',
+            'options' => [
+                '1' => 'January - March',
+                '2' => 'April - June',
+                '3' => 'July - September',
+                '4' => 'October - December'
+            ]
+        ]);
+
+        $this->crud->field([
+            'label' => 'Prepared By (First Name, Middle Initial, Last Name, Extension Name)',
+            'type' => 'text',
+            'name' => 'prepared_by'
+        ]);
+
+        $this->crud->field([
+            'label' => 'Prepared By Position',
+            'type' => 'text',
+            'name' => 'prepared_by_role'
+        ]);
+
+        $this->crud->field([
+            'label' => 'Checked By (First Name, Middle Initial, Last Name, Extension Name)',
+            'type' => 'text',
+            'name' => 'checked_by'
+        ]);
+
+        $this->crud->field([
+            'label'  => 'Checked By Position',
+            'type' => 'text',
+            'name' => 'checked_by_role'
+        ]);
+
+        $this->crud->field([
+            'name' => 'user_id',
+            'type' => 'hidden',
+            'value' => backpack_auth()->user()->id
         ]);
     }
 

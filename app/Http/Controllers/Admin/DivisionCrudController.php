@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ProcessRequest;
+use App\Http\Requests\DivisionRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class ProcessCrudController
+ * Class DivisionCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class ProcessCrudController extends CrudController
+class DivisionCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -21,19 +21,19 @@ class ProcessCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     *
+     * 
      * @return void
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Process::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/process');
-        CRUD::setEntityNameStrings('process', 'processes');
+        CRUD::setModel(\App\Models\Division::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/division');
+        CRUD::setEntityNameStrings('division', 'divisions');
     }
 
     /**
      * Define what happens when the List operation is loaded.
-     *
+     * 
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -49,13 +49,13 @@ class ProcessCrudController extends CrudController
 
     /**
      * Define what happens when the Create operation is loaded.
-     *
+     * 
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ProcessRequest::class);
+        CRUD::setValidation(DivisionRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
 
         /**
@@ -66,7 +66,7 @@ class ProcessCrudController extends CrudController
 
     /**
      * Define what happens when the Update operation is loaded.
-     *
+     * 
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */

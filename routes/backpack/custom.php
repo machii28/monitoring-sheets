@@ -23,4 +23,5 @@ Route::group([
     Route::crud('area', 'AreaCrudController');
     Route::crud('process', 'ProcessCrudController');
     Route::crud('process-owner', 'ProcessOwnerCrudController');
+    Route::crud('division', 'DivisionCrudController');
 }); // this should be the absolute last line of this file
