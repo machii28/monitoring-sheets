@@ -24,4 +24,8 @@ Route::group([
     Route::crud('process', 'ProcessCrudController');
     Route::crud('process-owner', 'ProcessOwnerCrudController');
     Route::crud('division', 'DivisionCrudController');
+    Route::crud('funtional-quality-objectives', 'FuntionalQualityObjectivesCrudController');
+    Route::crud('monitoring-sheet-answer', 'MonitoringSheetAnswerCrudController');
+    Route::crud('risk-register', 'RiskRegisterCrudController');
+    Route::crud('process-goals', 'ProcessGoalsCrudController');
 }); // this should be the absolute last line of this file

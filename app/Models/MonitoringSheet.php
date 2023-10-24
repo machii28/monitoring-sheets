@@ -16,7 +16,7 @@ class MonitoringSheet extends Model
     protected $table = 'monitoring_sheets';
 
     protected $fillable = [
-        'category_id',
+        'category',
         'division_id',
         'coverage',
         'year_quarter',
@@ -32,11 +32,6 @@ class MonitoringSheet extends Model
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(MonitoringSheetCategory::class, 'category_id', 'id');
     }
 
     public function questions(): HasMany

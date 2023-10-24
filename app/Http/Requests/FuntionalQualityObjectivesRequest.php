@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MonitoringSheetRequest extends FormRequest
+class FuntionalQualityObjectivesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +25,7 @@ class MonitoringSheetRequest extends FormRequest
     public function rules()
     {
         return [
-            'area_id' => 'required',
-            'coverage' => 'required',
-            'prepared_by' => 'required',
-            'checked_by' => 'required',
-            'process_id' => 'required',
-            'division_id' => 'required',
-            'prepared_by_role' => 'required',
-            'checked_by_role' => 'required'
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 
@@ -56,8 +49,7 @@ class MonitoringSheetRequest extends FormRequest
     public function messages()
     {
         return [
-            'prepared_by_role.required' => 'Prepared By Position is required',
-            'checked_by_role.required' => 'Checked By Position is required'
+            //
         ];
     }
 }

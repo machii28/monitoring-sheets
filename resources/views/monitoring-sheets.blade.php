@@ -22,7 +22,7 @@
                     <tbody class="text-gray-700">
                         @foreach($monitoringSheets as $monitoringSheet)
                             <tr class="text-center">
-                                <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->category->abbreviation }}</td>
+                                <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->category }}</td>
                                 <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->area->name }}</td>
                                 <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->year_quarter }}</td>
                                 <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->process->name }}</td>
