@@ -48,7 +48,7 @@ class PageController extends Controller
             ]);
         }
 
-        $assignedMonitoringSheet->is_filled_up = true;
+        $assignedMonitoringSheet->is_filled_up = !$request->get('save_and_exit');
         $assignedMonitoringSheet->save();
 
         return redirect()->route('po.monitoring-sheets', ['monitoringSheetId' => $monitoringSheetId]);
