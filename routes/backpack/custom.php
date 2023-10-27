@@ -28,4 +28,5 @@ Route::group([
     Route::crud('monitoring-sheet-answer', 'MonitoringSheetAnswerCrudController');
     Route::crud('risk-register', 'RiskRegisterCrudController');
     Route::crud('process-goals', 'ProcessGoalsCrudController');
+    Route::get('/{monitoringSheetId}/{poId}/monitoring_sheet_preview', 'MonitoringSheetPreviewController@index')->name('page.monitoring_sheet_preview.index');
 }); // this should be the absolute last line of this file

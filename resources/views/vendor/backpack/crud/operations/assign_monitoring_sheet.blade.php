@@ -18,17 +18,24 @@
                             <thead>
                                 <th>Monitoring Sheet</th>
                                 <th>Is Filled Up</th>
+                                <th>Action</th>
                             </thead>
                             <tbody>
                             @foreach ($assignedMonitoringSheets as $assignedMonitoringSheet)
                                 <tr>
-                                    <td>{{ $assignedMonitoringSheet->monitoringSheet->title }} - {{ $monitoringSheet->year_quarter }} - {{ $monitoringSheet->coverage }}</td>
+                                    <td>{{ $assignedMonitoringSheet->monitoringSheet->year_quarter }} - {{ $assignedMonitoringSheet->monitoringSheet->coverage }}</td>
                                     <td>
                                         @if ($assignedMonitoringSheet->is_filled_up)
                                             <span class="badge rounded-pill bg-success">Filled Up</span>
                                         @else
                                             <span class="badge rounded-pill bg-warning">Pending</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('page.monitoring_sheet_preview.index', [
+                                            'monitoringSheetId' => $assignedMonitoringSheet->monitoringSheet->id,
+                                            'poId' => $assignedMonitoringSheet->assigned_id
+                                        ])   }}">Preview</a>
                                     </td>
                                 </tr>
                             @endforeach
