@@ -27,12 +27,8 @@ class MonitoringSheetRequest extends FormRequest
         return [
             'area_id' => 'required',
             'coverage' => 'required',
-            'prepared_by' => 'required',
-            'checked_by' => 'required',
             'process_id' => 'required',
             'division_id' => 'required',
-            'prepared_by_role' => 'required',
-            'checked_by_role' => 'required'
         ];
     }
 

@@ -540,11 +540,11 @@
                                     </tr>
                                 @endforeach
                                 <tr style="height: 19px">
-                                    <td class="s16" colspan="3">{{ $monitoringSheet->prepared_by }}</td>
+                                    <td class="s16" colspan="3">{{ auth()->user()->name }}</td>
                                     <td class="s17" colspan="3">{{ $monitoringSheet->checked_by }}</td>
                                 </tr>
                                 <tr style="height: 18px">
-                                    <td class="s18" colspan="3">{{ $monitoringSheet->prepared_by_role }}</td>
+                                    <td class="s18" colspan="3">{{ auth()->user()->name->position }}</td>
                                     <td class="s19" colspan="3">{{ $monitoringSheet->checked_by_role }}</td>
                                 </tr>
                                 </tbody>

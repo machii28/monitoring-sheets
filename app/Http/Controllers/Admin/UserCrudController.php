@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\UserRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class UserCrudController
@@ -41,20 +42,9 @@ class UserCrudController extends CrudController
     {
         CRUD::setFromDb(); // set columns from db columns.
 
-        $this->crud->setColumnDetails('process_id', [
-            'label' => 'Process',
-            'type' => 'select',
-            'entity' => 'process',
-            'attribute' => 'name',
-            'model' => 'App\Models\Process'
-        ]);
-
-        $this->crud->setColumnDetails('area_id', [
-            'label' => 'Area',
-            'type' => 'select',
-            'entity' => 'area',
-            'attribute' => 'name',
-            'model' => 'App\Models\Area'
+        $this->crud->setColumnDetails('position', [
+            'label' => 'Position',
+            'type' => 'text'
         ]);
 
         $this->crud->setColumnDetails('role', [
@@ -66,10 +56,6 @@ class UserCrudController extends CrudController
                 'qa' => 'QA Coordinator / Admin'
             ]
         ]);
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
     }
 
     /**
@@ -93,26 +79,14 @@ class UserCrudController extends CrudController
                 'qa' => 'QA Coordinator / Admin'
             ]);
 
-        $this->crud->field([
-            'label' => 'Area',
-            'type' => 'select',
-            'name' => 'area_id',
-            'entity' => 'area',
-            'model' => 'App\Models\Area',
-            'attribute' => 'name',
-            'options' => (function ($query) {
-                return $query->orderBy('name', 'ASC')->get();
-            })
-        ]);
+        CRUD::field('position')
+            ->type('text')
+            ->label('Position');
 
-        $this->crud->field([
-            'label' => 'Process',
-            'type' => 'select',
-            'name' => 'process_id',
-            'entity' => 'process',
-            'model' => 'App\Models\Process',
-            'attribute' => 'name'
-        ]);
+        if (Request::route()->getName() === 'user.edit') {
+            $this->crud->field('password')
+                ->remove();
+        }
     }
 
     /**

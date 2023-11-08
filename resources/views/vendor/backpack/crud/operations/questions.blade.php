@@ -26,6 +26,10 @@
                             </div>
 
                             <button class="btn btn-primary">Add Question</button>
+
+                            <a href="{{ route('page.monitoring_sheet.preview', [
+                                            'monitoringSheetId' => $monitoringSheetId,
+                                        ])   }}" class="btn btn-primary">Preview</a>
                         </form>
                     </div>
                 </div>

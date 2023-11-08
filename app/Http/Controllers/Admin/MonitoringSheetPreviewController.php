@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\AssignedMonitoringSheet;
+use App\Models\MonitoringSheet;
 use Illuminate\Routing\Controller;
 
 /**
@@ -26,6 +27,22 @@ class MonitoringSheetPreviewController extends Controller
                 'MonitoringSheetPreview' => false,
             ],
             'page' => 'resources/views/admin/monitoring_sheet_preview.blade.php',
+            'controller' => 'app/Http/Controllers/Admin/MonitoringSheetPreviewController.php',
+        ]);
+    }
+
+    public function preview($monitoringSheetId)
+    {
+        $data = MonitoringSheet::with(['questions'])->find($monitoringSheetId);
+
+        return view('admin.preview', [
+            'title' => 'Monitoring Sheet Preview',
+            'monitoringSheet' => $data,
+            'breadcrumbs' => [
+                trans('backpack::crud.admin') => backpack_url('dashboard'),
+                'MonitoringSheetPreview' => false,
+            ],
+            'page' => 'resources/views/admin/preview.blade.php',
             'controller' => 'app/Http/Controllers/Admin/MonitoringSheetPreviewController.php',
         ]);
     }

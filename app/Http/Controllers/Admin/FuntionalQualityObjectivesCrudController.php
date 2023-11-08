@@ -184,30 +184,6 @@ class FuntionalQualityObjectivesCrudController extends CrudController
         ]);
 
         $this->crud->field([
-            'label' => 'Prepared By (First Name, Middle Initial, Last Name, Extension Name)',
-            'type' => 'text',
-            'name' => 'prepared_by'
-        ]);
-
-        $this->crud->field([
-            'label' => 'Prepared By Position',
-            'type' => 'text',
-            'name' => 'prepared_by_role'
-        ]);
-
-        $this->crud->field([
-            'label' => 'Checked By (First Name, Middle Initial, Last Name, Extension Name)',
-            'type' => 'text',
-            'name' => 'checked_by'
-        ]);
-
-        $this->crud->field([
-            'label'  => 'Checked By Position',
-            'type' => 'text',
-            'name' => 'checked_by_role'
-        ]);
-
-        $this->crud->field([
             'name' => 'user_id',
             'type' => 'hidden',
             'value' => backpack_auth()->user()->id

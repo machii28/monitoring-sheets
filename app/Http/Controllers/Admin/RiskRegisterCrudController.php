@@ -133,7 +133,7 @@ class RiskRegisterCrudController extends CrudController
         $this->crud->field([
             'label' => 'Category',
             'type' => 'text',
-            'value' => 'Risk Register',
+            'value' => 'Functional Quality Objectives',
             'name' => 'category',
             'attributes' => [
                 'disabled' => true,
@@ -180,30 +180,6 @@ class RiskRegisterCrudController extends CrudController
                 '3' => 'July - September',
                 '4' => 'October - December'
             ]
-        ]);
-
-        $this->crud->field([
-            'label' => 'Prepared By (First Name, Middle Initial, Last Name, Extension Name)',
-            'type' => 'text',
-            'name' => 'prepared_by'
-        ]);
-
-        $this->crud->field([
-            'label' => 'Prepared By Position',
-            'type' => 'text',
-            'name' => 'prepared_by_role'
-        ]);
-
-        $this->crud->field([
-            'label' => 'Checked By (First Name, Middle Initial, Last Name, Extension Name)',
-            'type' => 'text',
-            'name' => 'checked_by'
-        ]);
-
-        $this->crud->field([
-            'label'  => 'Checked By Position',
-            'type' => 'text',
-            'name' => 'checked_by_role'
         ]);
 
         $this->crud->field([

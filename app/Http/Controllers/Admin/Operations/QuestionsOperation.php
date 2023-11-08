@@ -70,7 +70,7 @@ trait QuestionsOperation
         $this->data['crud'] = $this->crud;
         $this->data['title'] = CRUD::getTitle() ?? 'Questions ' . $this->crud->entity_name;
         $this->data['monitoringSheetId'] = $monitoringSheetId;
-        $this->data['questions'] = MonitoringSheet::find($monitoringSheetId)->first()->questions;
+        $this->data['questions'] = MonitoringSheet::find($monitoringSheetId)->questions;
 
         // load the view
         return view('crud::operations.questions', $this->data);
