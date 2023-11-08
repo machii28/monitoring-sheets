@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Creagia\LaravelSignPad\Concerns\RequiresSignature;
+use Creagia\LaravelSignPad\Contracts\CanBeSigned;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AssignedMonitoringSheet extends Model
+class AssignedMonitoringSheet extends Model implements CanBeSigned
 {
+    use RequiresSignature;
     use CrudTrait;
     use HasFactory;
 

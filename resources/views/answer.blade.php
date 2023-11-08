@@ -63,6 +63,15 @@
                         </div>
                     </div>
 
+
+                    <form action="{{ $monitoringSheet->getSignatureRoute() }}" method="POST">
+                        @csrf
+                        <div style="text-align: center">
+                            <x-creagia-signature-pad/>
+                        </div>
+                    </form>
+                    <script src="{{ asset('vendor/sign-pad/sign-pad.min.js') }}"></script>
+
                     <form
                         action="{{ route('po.submit-answer.monitoring-sheet', ['monitoringSheetId' => $monitoringSheet->id]) }}"
                         method="POST"
@@ -119,7 +128,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             @endforeach
                         </div>
                         <input type="hidden" name="save_and_exit" id="saveAndExitField" value="0">
@@ -152,7 +160,8 @@
             <div class="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity"
                  style="--tw-bg-opacity: 0.65 !important">
 
-                <div class="modal-container bg-white mx-auto rounded shadow-lg z-50 overflow-y-auto bg-white max-w-7xl p-6">
+                <div
+                    class="modal-container bg-white mx-auto rounded shadow-lg z-50 overflow-y-auto bg-white max-w-7xl p-6">
                     <div class="modal-container bg-white mx-auto rounded shadow-lg z-50 overflow-y-auto">
 
                         <link type="text/css" rel="stylesheet" href="resources/sheet.css">
@@ -489,7 +498,8 @@
                                                 style="width:inherit;height:inherit;object-fit:scale-down;object-position:left top;"/>
                                         </div>
                                     </td>
-                                    <td class="s3" colspan="5">MONITORING SHEET - {{ $monitoringSheet->getFormattedCategoryAttribute() }}<br><span
+                                    <td class="s3" colspan="5">MONITORING SHEET
+                                        - {{ $monitoringSheet->getFormattedCategoryAttribute() }}<br><span
                                             style="font-size:11pt;font-family:Arial;font-weight:bold;color:#000000;">PANGASINAN STATE UNIVERSITY<br>San Carlos City Campus</span>
                                     </td>
                                 </tr>
@@ -544,7 +554,7 @@
                                     <td class="s17" colspan="3">{{ $monitoringSheet->checked_by }}</td>
                                 </tr>
                                 <tr style="height: 18px">
-                                    <td class="s18" colspan="3">{{ auth()->user()->name->position }}</td>
+                                    <td class="s18" colspan="3">{{ auth()->user()->position }}</td>
                                     <td class="s19" colspan="3">{{ $monitoringSheet->checked_by_role }}</td>
                                 </tr>
                                 </tbody>
@@ -553,7 +563,9 @@
                     </div>
 
                     <div class="w-full">
-                        <button id="closeModal" class="block mt-8 bg-blue-400 rounded-md w-1/4 text-white p-4 mx-auto">Close</button>
+                        <button id="closeModal" class="block mt-8 bg-blue-400 rounded-md w-1/4 text-white p-4 mx-auto">
+                            Close
+                        </button>
                     </div>
                 </div>
             </div>
