@@ -21,9 +21,11 @@ class PageController extends Controller
 
     public function answer($monitoringSheetId)
     {
-        $monitoringSheet = MonitoringSheet::find($monitoringSheetId);
+        $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
+                                ->where('assigned_id', auth()->id())
+                                ->first();
 
-        $data['monitoringSheet'] = $monitoringSheet;
+        $data['assignedMonitoringSheet'] = $assignedMonitoringSheet;
 
         return view('answer', $data);
     }
