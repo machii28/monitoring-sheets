@@ -70,4 +70,15 @@ class PageController extends Controller
 
         return $pdf->stream('monitoring_sheet.pdf');
     }
+
+    public function approve($monitoringSheetId, $poId)
+    {
+         $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
+            ->where('assigned_id', $poId)
+            ->first();
+
+         return view('approve', [
+             'assignedMonitoringSheet' => $assignedMonitoringSheet
+         ]);
+    }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\LaravelSignPadController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QMRController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/creagia/sign-pad', LaravelSignPadController::class)->name('sign-pad::signature');
     Route::get('{monitoringSheetId}/print/{poId}', [PageController::class, 'print'])->name('po.print');
+
+    Route::get('fqo', [QMRController::class, 'fqo'])->name('fqo');
+    Route::get('pg', [QMRController::class, 'pg'])->name('pg');
+    Route::get('rr', [QMRController::class, 'rr'])->name('rr');
+
+    Route::get('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approve'])->name('po.approve');
 });
 
 require __DIR__.'/auth.php';
