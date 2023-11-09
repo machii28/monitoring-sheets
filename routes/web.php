@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LaravelSignPadController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/{monitoringSheetId}/answer-monitoring-sheet', [PageController::class, 'answer'])->name('po.answer.monitoring-sheet');
     Route::post('/{monitoringSheetId}/submit-answer', [PageController::class, 'submitAnswer'])->name('po.submit-answer.monitoring-sheet');
+
+    Route::post('/creagia/sign-pad', LaravelSignPadController::class)->name('sign-pad::signature');
+    Route::get('{monitoringSheetId}/print/{poId}', [PageController::class, 'print'])->name('po.print');
 });
 
 require __DIR__.'/auth.php';

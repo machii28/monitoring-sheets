@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AssignedMonitoringSheet;
 use App\Models\MonitoringSheet;
 use App\Models\MonitoringSheetAnswer;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -54,5 +55,19 @@ class PageController extends Controller
         $assignedMonitoringSheet->save();
 
         return redirect()->route('po.monitoring-sheets', ['monitoringSheetId' => $monitoringSheetId]);
+    }
+
+    public function print($monitoringSheetId, $poId)
+    {
+        $assignedMonitoringSheetId = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
+            ->where('assigned_id', $poId)
+            ->first();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('print', [
+            'assignedMonitoringSheet' => $assignedMonitoringSheetId
+        ])->setPaper('a4', 'landscape');
+
+
+        return $pdf->stream('monitoring_sheet.pdf');
     }
 }

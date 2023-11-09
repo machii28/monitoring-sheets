@@ -10,7 +10,7 @@ return [
     /**
      * Path where the signature images will be stored.
      */
-    'signatures_path' => 'signatures',
+    'signatures_path' => 'public/signatures',
 
     /**
      * Path where the documents will be stored.
@@ -20,7 +20,7 @@ return [
     /**
      * Route name where you want to redirect users after signing.
      */
-    'redirect_route_name' => null,
+    'redirect_route_name' => '',
 
     /**
      * Width and height of the signature rectangle.
