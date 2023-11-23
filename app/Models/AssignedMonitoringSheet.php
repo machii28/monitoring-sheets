@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AssignedMonitoringSheet extends Model implements CanBeSigned
+class AssignedMonitoringSheet extends Model
 {
-    use RequiresSignature;
     use CrudTrait;
     use HasFactory;
 

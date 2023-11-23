@@ -1,11 +1,22 @@
 @php
 
 $logo = '/images/logo.png';
-$signature = str_replace('public', '', $assignedMonitoringSheet->signature->getSignatureImagePath());
+$preparedBySignature = $assignedMonitoringSheet->prepared_by_signature
+    ? str_replace('public/', '/', $assignedMonitoringSheet->prepared_by_signature)
+    : '';
+$checkedBySignature = $assignedMonitoringSheet->checked_by_signature
+    ? str_replace('public/', '/', $assignedMonitoringSheet->checked_by_signature)
+    : '';
+
 
 if ($assignedMonitoringSheet['print']) {
     $logo = getcwd() . $logo;
-    $signature = str_replace('storage/public', 'storage/app/public', storage_path($assignedMonitoringSheet->signature->getSignatureImagePath()));
+    $preparedBySignature = $assignedMonitoringSheet->prepared_by_signature
+    ? str_replace('storage/public', 'storage/app/public', storage_path($assignedMonitoringSheet->prepared_by_signature))
+    : '';
+    $checkedBySignature = $assignedMonitoringSheet->checked_by_signature
+    ? str_replace('storage/public', 'storage/app/public', storage_path($assignedMonitoringSheet->checked_by_signature))
+    : '';
 }
 
 @endphp
@@ -402,18 +413,25 @@ if ($assignedMonitoringSheet['print']) {
         @endforeach
         <tr style="height: 19px">
             <td class="s16" colspan="3">
-                @if ($assignedMonitoringSheet->hasBeenSigned())
+                @if ($assignedMonitoringSheet->prepared_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
-                         src="{{ $signature }}"
+                         src="{{ $preparedBySignature }}"
                          height="100" width="150" alt="">
                 @endif
                 <div style="display: block">
                     {{ auth()->user()->name }}
                 </div>
             </td>
-            <td class="s17" colspan="3">{{
-                \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->name
-             }}</td>
+            <td class="s17" colspan="3">
+                @if ($assignedMonitoringSheet->checked_by_signature)
+                    <img style="margin: auto; z-index: 9999999; display: block"
+                         src="{{ $checkedBySignature }}"
+                         height="100" width="150" alt="">
+                @endif
+                <div style="display: block">
+                    {{ \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->name }}
+                </div>
+            </td>
         </tr>
         <tr style="height: 18px">
             <td class="s18" colspan="3">{{ auth()->user()->role }}</td>

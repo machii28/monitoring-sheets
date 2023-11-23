@@ -52,6 +52,15 @@ class PageController extends Controller
             ]);
         }
 
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = $file->getClientOriginalName();
+
+            $data = $file->storeAs('public/signatures', $fileName);
+
+            $assignedMonitoringSheet->prepared_by_signature = $data;
+        }
+
         $assignedMonitoringSheet->is_filled_up = !$request->get('save_and_exit');
         $assignedMonitoringSheet->save();
 
@@ -82,5 +91,23 @@ class PageController extends Controller
          return view('approve', [
              'assignedMonitoringSheet' => $assignedMonitoringSheet
          ]);
+    }
+
+    public function approveCheckedBy($monitoringSheetId, $poId, Request $request)
+    {
+        $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
+            ->where('assigned_id', $poId)
+            ->first();
+
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+
+        $data = $file->storeAs('public/signatures', $fileName);
+
+        $assignedMonitoringSheet->checked_by_signature = $data;
+        $assignedMonitoringSheet->is_approved = true;
+        $assignedMonitoringSheet->save();
+
+        return redirect()->back();
     }
 }
