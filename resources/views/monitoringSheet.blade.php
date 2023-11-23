@@ -2,22 +2,21 @@
 
 $logo = '/images/logo.png';
 $preparedBySignature = $assignedMonitoringSheet->prepared_by_signature
-    ? str_replace('public/', '/', $assignedMonitoringSheet->prepared_by_signature)
+    ? str_replace('public/', '/storage/', $assignedMonitoringSheet->prepared_by_signature)
     : '';
 $checkedBySignature = $assignedMonitoringSheet->checked_by_signature
-    ? str_replace('public/', '/', $assignedMonitoringSheet->checked_by_signature)
+    ? str_replace('public/', '/storage/', $assignedMonitoringSheet->checked_by_signature)
     : '';
-
 
 if ($assignedMonitoringSheet['print']) {
     $logo = getcwd() . $logo;
     $preparedBySignature = $assignedMonitoringSheet->prepared_by_signature
-    ? str_replace('storage/public', 'storage/app/public', storage_path($assignedMonitoringSheet->prepared_by_signature))
+    ? str_replace('storage\public', '/storage/app/public', storage_path($assignedMonitoringSheet->prepared_by_signature))
     : '';
     $checkedBySignature = $assignedMonitoringSheet->checked_by_signature
-    ? str_replace('storage/public', 'storage/app/public', storage_path($assignedMonitoringSheet->checked_by_signature))
+    ? str_replace('storage\public', '/storage/app/public', storage_path($assignedMonitoringSheet->checked_by_signature))
     : '';
-}
+    }
 
 @endphp
 

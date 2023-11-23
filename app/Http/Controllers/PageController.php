@@ -56,7 +56,7 @@ class PageController extends Controller
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
 
-            $data = $file->storeAs('public/signatures', $fileName);
+            $data = $file->storeAs('storage/signatures', $fileName);
 
             $assignedMonitoringSheet->prepared_by_signature = $data;
         }

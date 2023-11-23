@@ -36,7 +36,14 @@
                                             class="bg-red-400 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-400 dark:text-white">Pending</span>
                                     @endif
                                 </td>
-                                <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->checked_by }}</td>
+                                <td class="px-4 py-2">
+                                    @if ($monitoringSheet->is_approved)    
+                                        {{ 
+                                            \App\Models\User::where('role', 'Campus Executive Director/QMR')
+                                            ->first()->name
+                                        }}
+                                    @endif
+                                </td>
                                 <td class="px-4 py-2">
                                     @if (!$monitoringSheet->is_filled_up)
                                         <a href="{{ route('po.answer.monitoring-sheet', ['monitoringSheetId' => $monitoringSheet->monitoringSheet->id]) }}"

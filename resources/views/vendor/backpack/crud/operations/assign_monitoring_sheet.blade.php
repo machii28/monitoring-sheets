@@ -36,6 +36,13 @@
                                             'monitoringSheetId' => $assignedMonitoringSheet->monitoringSheet->id,
                                             'poId' => $assignedMonitoringSheet->assigned_id
                                         ])   }}">Preview</a>
+                                        <a href="{{ route('po.print', [
+                                            'monitoringSheetId' => $assignedMonitoringSheet->monitoringSheet->id,
+                                            'poId' => $assignedMonitoringSheet->assigned_id
+                                        ]) }}"
+                                           class="text-xs text-indigo-700 text-center">
+                                            Print
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
