@@ -1,5 +1,22 @@
+@php
+
+$logo = '/images/logo.png';
+$signature = str_replace('public', '', $assignedMonitoringSheet->signature->getSignatureImagePath());
+
+if ($assignedMonitoringSheet['print']) {
+    $logo = getcwd() . $logo;
+    $signature = str_replace('storage/public', 'storage/app/public', storage_path($assignedMonitoringSheet->signature->getSignatureImagePath()));
+}
+
+@endphp
+
 <link type="text/css" rel="stylesheet" href="resources/sheet.css">
 <style>
+    .ritz .waffle {
+        border: 2px SOLID #000000;
+        width: 100%;
+    }
+
     .ritz .waffle a {
         color: inherit;
     }
@@ -240,7 +257,7 @@
         border-bottom: 2px SOLID #000000;
         border-right: 1px SOLID #000000;
         background-color: #ffffff;
-        text-align: left;
+        text-align: center;
         color: #000000;
         font-family: 'docs-Calibri', Arial;
         font-size: 11pt;
@@ -328,9 +345,8 @@
         <tbody>
         <tr style="height: 100px">
             <td class="s2">
-                <div style="width:110px;height:100px;"><img
-                        src="https://lh7-us.googleusercontent.com/sheets/ACTFsxQq7ZGQT_yfmE5OVqKV7OUXx_CxDywALwTVQCAFotb1-eZAHH3mxl149JetcNyf7D1_B4gS3DKeU4fc0JmzD1IJ0enMvi5MeUrRNmlx1bvRWLPCR0jS-6Gi6Yk0TngKkpb6bPk2kUf6rwgiWM-bSaNa0guacfUKJ4dVZhkJOg8FyM_NAYVyGkRjCQU9tB9h4OCajqjCwmLzWYWjEbPQradR9AhArZfRt_9lIeVnhU9RCwkd470TNb4veGt0Gci4iVo-YJRRSUWxtoctyBVnlRRySg-eLAMXjx1-MtWSv5kuV7Z_CqWgaK1wrwkZnRJ8wwCY1w5Ti83j2sR1DwV6FhIriRLGErGzvPmac2TW2DfZI5s04dNkmGqDhilkPJ4J5YBzMf388YIyCQl63cLeSw3NqkQIk3q-jmTukCqzIEtDQJakkKk-zYSSNCX5gaV7cbXKkJeqZFeQrqoSHeXIoGHL56O60Pbuq3MqC81mJXWtUmqQsukE5S_TvCwtwe2C0VBrsbJIf_Gw6yTh2tVMNvatKpRoaOQYW4FMMeSjPks4qO3b0SU3ofwcCpKNC_gBZcT_fHbdaEBt5wP8F5QUvMBhg7GBLSMQ1aHpPXSlHN5JowbxnWDVrP9b0TEGn4gLZDi-FR915yXEenmmpy7A0mCujK_-YRnWUbBjifyjaRNloLlmr4MZRdunM0abWei5UwwQHLUE6P2p21EmLvPDdvIoph5PDKhVLxkg-vlOqd157uFqpTFLTxCV5mNJcM8XmADwJs8BO_F5akvCjUz2HHJvE8oZfGFe2D-QFvs1UI96ksIUOlgceoB3maWu5JrblbRSv-TCRU2toAB50FkMv87_SkV2XNEgDMsB7XkYY3_WpymZMcmihT7H2xDsmU2PkjwIIJkbQ0Qa543KYc1hPd0QMiifLCn1OV-ByaR6bl1ljTNBeSXZhKWs2LpEkdIgXqtQ3qbNp2_gZPnK5wAOcNaAZqPcCa7sDAzbPTaZQOmG-NDL6xzSsyJW3YostSeE7blNB-TqvEGSjhqKkU9rvvIBOL3uQ8dQFDWgPPXED8H2WkUsBSKkR7WAUfhTr3Ymnn0yQ9v0qPKGpxw5mqcQnoOOwt-AyGfd22I=w110-h100"
-                        style="width:inherit;height:inherit;object-fit:scale-down;object-position:left top;"/>
+                <div style="display: flex; justify-content: center; margin: 10px;">
+                    <img src="{{ $logo }}" width="100px" height="100px"/>
                 </div>
             </td>
             <td class="s3" colspan="5">MONITORING SHEET
@@ -387,17 +403,23 @@
         <tr style="height: 19px">
             <td class="s16" colspan="3">
                 @if ($assignedMonitoringSheet->hasBeenSigned())
-                    <img style="margin: auto"
-                         src="{{ str_replace('public', '', $assignedMonitoringSheet->signature->getSignatureImagePath()) }}"
-                         height="200" width="300" alt="">
+                    <img style="margin: auto; z-index: 9999999; display: block"
+                         src="{{ $signature }}"
+                         height="100" width="150" alt="">
                 @endif
-                {{ auth()->user()->name }}
+                <div style="display: block">
+                    {{ auth()->user()->name }}
+                </div>
             </td>
-            <td class="s17" colspan="3">{{ $assignedMonitoringSheet->monitoringSheet->checked_by }}</td>
+            <td class="s17" colspan="3">{{
+                \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->name
+             }}</td>
         </tr>
         <tr style="height: 18px">
-            <td class="s18" colspan="3">{{ auth()->user()->position }}</td>
-            <td class="s19" colspan="3">{{ $assignedMonitoringSheet->monitoringSheet->checked_by_role }}</td>
+            <td class="s18" colspan="3">{{ auth()->user()->role }}</td>
+            <td class="s19" colspan="3">{{
+                 \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->role
+              }}</td>
         </tr>
         </tbody>
     </table>

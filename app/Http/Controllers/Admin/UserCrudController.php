@@ -40,21 +40,22 @@ class UserCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
-
-        $this->crud->setColumnDetails('position', [
-            'label' => 'Position',
-            'type' => 'text'
+        $this->crud->addColumn([
+            'name' => 'name',
+            'type' => 'text',
+            'label' => 'Name'
         ]);
 
-        $this->crud->setColumnDetails('role', [
-            'label' => 'Role',
-            'type' => 'select_from_array',
-            'options' => [
-                'qao' => 'QMR',
-                'po' => 'Process Owner',
-                'qa' => 'QA Coordinator / Admin'
-            ]
+        $this->crud->addColumn([
+            'name' => 'email',
+            'type' => 'email',
+            'label' => 'Email'
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'role',
+            'type' => 'role',
+            'label' => 'Role'
         ]);
     }
 
@@ -73,15 +74,10 @@ class UserCrudController extends CrudController
         CRUD::field('role')
             ->type('select_from_array')
             ->label('User Role')
-            ->options([
-                'qao' => 'QMR',
-                'po' => 'Process Owner',
-                'qa' => 'QA Coordinator / Admin'
-            ]);
+            ->options(config('user_roles'));
 
-        CRUD::field('position')
-            ->type('text')
-            ->label('Position');
+        $this->crud->field('position')
+            ->remove();
 
         if (Request::route()->getName() === 'user.edit') {
             $this->crud->field('password')

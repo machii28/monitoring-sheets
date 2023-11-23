@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                     <div class="hidden space-x-8 sm:my-px sm:ml-10 sm:flex">
-                        @if (auth()->user()->role === 'po')
+                        @if (auth()->user()->role !== 'Quality Assurance' && auth()->user()->role !== 'Campus Executive Director/QMR')
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Dashboard') }}
                             </x-nav-link>
@@ -20,7 +20,9 @@
                             <x-nav-link :href="route('po.monitoring-sheets')" :active="request()->routeIs('po.monitoring-sheets')">
                                 {{ __('Monitoring Sheets') }}
                             </x-nav-link>
-                        @else
+                        @endif
+
+                        @if (auth()->user()->role === 'Campus Executive Director/QMR')
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Dashboard') }}
                             </x-nav-link>

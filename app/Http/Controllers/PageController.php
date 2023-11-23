@@ -25,6 +25,7 @@ class PageController extends Controller
         $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
                                 ->where('assigned_id', auth()->id())
                                 ->first();
+        $assignedMonitoringSheet['print'] = false;
 
         $data['assignedMonitoringSheet'] = $assignedMonitoringSheet;
 
@@ -59,14 +60,15 @@ class PageController extends Controller
 
     public function print($monitoringSheetId, $poId)
     {
-        $assignedMonitoringSheetId = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
+        $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
             ->where('assigned_id', $poId)
             ->first();
+        $assignedMonitoringSheet['print'] = true;
+
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('print', [
-            'assignedMonitoringSheet' => $assignedMonitoringSheetId
+            'assignedMonitoringSheet' => $assignedMonitoringSheet
         ])->setPaper('a4', 'landscape');
-
 
         return $pdf->stream('monitoring_sheet.pdf');
     }

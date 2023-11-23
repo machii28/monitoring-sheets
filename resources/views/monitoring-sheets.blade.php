@@ -16,6 +16,7 @@
                             <th class="px-4 py-2">Year Quarter</th>
                             <th class="px-4 py-2">Process</th>
                             <th class="px-4 py-2">Is Filled Up</th>
+                            <th class="px-4 py-2">Checked By</th>
                             <th class="px-4 py-">Action</th>
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                                             class="bg-red-400 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-400 dark:text-white">Pending</span>
                                     @endif
                                 </td>
+                                <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->checked_by }}</td>
                                 <td class="px-4 py-2">
                                     @if (!$monitoringSheet->is_filled_up)
                                         <a href="{{ route('po.answer.monitoring-sheet', ['monitoringSheetId' => $monitoringSheet->monitoringSheet->id]) }}"
@@ -52,7 +54,6 @@
                                             Print
                                         </a>
                                     @endif
-
                                 </td>
                             </tr>
                         @endforeach

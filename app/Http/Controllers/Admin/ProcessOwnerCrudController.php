@@ -48,8 +48,6 @@ class ProcessOwnerCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
-
         CRUD::denyAccess('delete');
         CRUD::denyAccess('update');
         CRUD::denyAccess('show');
@@ -58,27 +56,29 @@ class ProcessOwnerCrudController extends CrudController
             $query->where('role', 'po');
         });
 
-        $this->crud->setColumnDetails('process_id', [
-            'label' => 'Process',
-            'type' => 'select',
-            'entity' => 'process',
-            'attribute' => 'name',
-            'model' => 'App\Models\Process'
+        $this->crud->addColumn([
+            'label' => 'Position',
+            'type' => 'text',
+            'name' => 'position'
         ]);
 
-        $this->crud->setColumnDetails('area_id', [
-            'label' => 'Area',
-            'type' => 'select',
-            'entity' => 'area',
-            'attribute' => 'name',
-            'model' => 'App\Models\Area'
+        $this->crud->addColumn([
+            'label' => 'Name',
+            'type' => 'text',
+            'name' => 'name'
+        ]);
+
+        $this->crud->addColumn([
+            'label' => 'Year',
+            'type' => 'text',
+            'name' => 'year'
         ]);
 
         $this->crud->addColumn([
             'name' => 'total_assigned_ms',
             'label' => 'Total Assigned Monitoring Sheets',
             'type' => 'number',
-            'attribute' => 'total_assigned_ms'
+            'attribute' => 'total_assigned_ms',
         ]);
 
         CRUD::column('role')->remove();

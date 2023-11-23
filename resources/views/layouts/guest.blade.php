@@ -18,7 +18,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                    <h1>Monitoring Sheets</h1>
+                    <img src="/images/logo.png" width="100px" height="100px">
                 </a>
             </div>
 

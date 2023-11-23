@@ -3,7 +3,7 @@
 @section('header')
     <section class="header-operation container-fluid animated fadeIn d-flex mb-2 align-items-baseline d-print-none">
         <h2>
-            <span class="text-capitalize mb-0">Setup Questions</span>
+            <span class="text-capitalize mb-0">Setup Target</span>
         </h2>
     </section>
 @endsection
@@ -14,6 +14,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
+
                     <div class="card-body">
                         <form action="{{ route('monitoring-sheet.add-question', ['monitoringSheetId' => $monitoringSheetId]) }}" method="POST">
                             {{ csrf_field() }}
@@ -30,6 +31,8 @@
                             <a href="{{ route('page.monitoring_sheet.preview', [
                                             'monitoringSheetId' => $monitoringSheetId,
                                         ])   }}" class="btn btn-primary">Preview</a>
+
+                            <a href="{{ url()->previous() }}" class="btn btn-primary">Back</a>
                         </form>
                     </div>
                 </div>
