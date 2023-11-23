@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('rr', [QMRController::class, 'rr'])->name('rr');
 
     Route::get('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approve'])->name('po.approve');
+    Route::post('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approveCheckedBy'])->name('po.post.approve');
 });
 
 require __DIR__.'/auth.php';

@@ -65,8 +65,19 @@
                     <form
                         action="{{ route('po.submit-answer.monitoring-sheet', ['monitoringSheetId' => $assignedMonitoringSheet->monitoringSheet->id]) }}"
                         method="POST"
-                        id="answerForm">
+                        id="answerForm"
+                        enctype="multipart/form-data"
+                    >
                         {{ csrf_field() }}
+                        <div class="p-4">
+                            <p class="font-semibold">Signature</p>
+
+                            <div class="mb-4">
+                                <label for="file" class="block text-gray-700 font-bold mb-2">Upload Signature:</label>
+                                <input type="file" name="file" id="file" class="border rounded px-4 py-2 w-full">
+                            </div>
+                        </div>
+
                         <div class="p-4">
                             @foreach($assignedMonitoringSheet->monitoringSheet->questions as $key => $question)
                                 @php
@@ -124,33 +135,6 @@
                         <input type="hidden" name="save_and_exit" id="saveAndExitField" value="0">
 
                     </form>
-
-                    <div class="p-4">
-                        <div class="border m-2 p-4">
-                            <div class="p-4 border text-center">
-                                <p class="font-semibold">Signature</p>
-
-                                @if (!$assignedMonitoringSheet->hasBeenSigned())
-                                    <form action="{{ $assignedMonitoringSheet->getSignatureRoute() }}"
-                                          method="POST">
-                                        @csrf
-                                        <div style="text-align: center">
-                                            <x-creagia-signature-pad
-                                                button-classes="bg-gray-100 px-4 py-2 rounded-xl mt-4"
-                                            />
-                                        </div>
-                                    </form>
-                                    <script src="{{ asset('vendor/sign-pad/sign-pad.min.js') }}"></script>
-                                @else
-                                    <div>
-                                        <img class="w-1/2 mx-auto"
-                                             src="{{ str_replace('public', '', $assignedMonitoringSheet->signature->getSignatureImagePath()) }}"
-                                             height="100">
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="grid m-10 grid-cols-3">
                         <div class="mx-auto w-1/2">
