@@ -26,7 +26,7 @@
                                 <input type="text" name="question" id="question" class="form-control">
                             </div>
 
-                            <button class="btn btn-primary">Add Question</button>
+                            <button class="btn btn-primary">Add Target</button>
 
                             <a href="{{ route('page.monitoring_sheet.preview', [
                                             'monitoringSheetId' => $monitoringSheetId,
