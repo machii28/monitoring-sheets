@@ -53,7 +53,10 @@ class ProcessOwnerCrudController extends CrudController
         CRUD::denyAccess('show');
 
         $this->crud->addClause(function ($query) {
-            $query->where('role', 'po');
+            $query->whereNotIn('role', [
+                'Quality Assurance Officer',
+                'Campus Executive Director/QMR'
+            ]);
         });
 
         $this->crud->addColumn([

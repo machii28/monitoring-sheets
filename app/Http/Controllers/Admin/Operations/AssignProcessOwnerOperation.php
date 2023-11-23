@@ -68,9 +68,10 @@ trait AssignProcessOwnerOperation
         $this->data['title'] = CRUD::getTitle() ?? 'Assign Process Owner '.$this->crud->entity_name;
         $this->data['processOwners'] = $processOwners;
         $this->data['monitoringSheetId'] = $monitoringSheetId;
-        $this->data['processOwnersSelection'] = User::where('role', 'po')
-            ->whereNotIn('id', $processOwners->pluck('assigned_id'))
-            ->pluck('name', 'id');
+        $this->data['processOwnersSelection'] = User::whereNotIn('role', [
+            'Quality Assurance Officer',
+            'Campus Executive Director/QMR'
+        ])->pluck('name', 'id');
 
         // load the view
         return view('crud::operations.assign_process_owner', $this->data);
