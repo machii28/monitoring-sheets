@@ -30,7 +30,7 @@
                                 <td class="px-4 py-2">
                                     @if ($monitoringSheet->is_filled_up)
                                         <span
-                                            class="bg-red-400 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-400 dark:text-white">Done</span>
+                                            class="bg-green-400 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-400 dark:text-white">Done</span>
                                     @else
                                         <span
                                             class="bg-red-400 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-400 dark:text-white">Pending</span>

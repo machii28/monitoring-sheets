@@ -67,10 +67,10 @@
 	    Backpack\CRUD\app\Library\Widget::make()
 			->group('hidden')
 		    ->type('progress')
-		    ->class('card border-0 text-white bg-warning mt-4')
+		    ->class('card border-0 text-white bg-dark mt-4')
 		    ->value($totalPG)
 		    ->progressClass('progress-bar')
-		    ->description('Total Number of Risk Register')
+		    ->description('Total Number of Risk Process Goal')
 		    ->progress($pgProgress)
 		    ->hint("$totalSubmittedPG Total Number of Submitted PG"),
 	]);
