@@ -25,7 +25,7 @@ class DivisionRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required'
+             'name' => 'required|exists:divisions,name'
         ];
     }
 
@@ -49,7 +49,7 @@ class DivisionRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'exists' => 'Division Already Exists'
         ];
     }
 }

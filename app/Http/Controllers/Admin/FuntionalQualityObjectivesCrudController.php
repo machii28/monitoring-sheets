@@ -79,7 +79,7 @@ class FuntionalQualityObjectivesCrudController extends CrudController
             'type' => 'select',
             'entity' => 'area',
             'attribute' => 'name',
-            'model' => 'App\Models\Area'
+            'model' => 'App\Models\Area',
         ]);
 
         $this->crud->setColumnDetails('division_id', [
@@ -87,7 +87,7 @@ class FuntionalQualityObjectivesCrudController extends CrudController
             'type' => 'select',
             'entity' => 'division',
             'attribute' => 'name',
-            'model' => 'App\Models\Division'
+            'model' => 'App\Models\Division',
         ]);
 
         $this->crud->setColumnDetails('process_id', [
@@ -95,7 +95,7 @@ class FuntionalQualityObjectivesCrudController extends CrudController
             'type' => 'select',
             'entity' => 'process',
             'attribute' => 'name',
-            'model' => 'App\Models\Process'
+            'model' => 'App\Models\Process',
         ]);
 
         $this->crud->setColumnDetails('coverage', [
@@ -138,7 +138,10 @@ class FuntionalQualityObjectivesCrudController extends CrudController
             'name' => 'category',
             'attributes' => [
                 'disabled' => true,
-            ]
+            ],
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            })
         ]);
 
         $this->crud->field([
@@ -147,7 +150,11 @@ class FuntionalQualityObjectivesCrudController extends CrudController
             'name' => 'division_id',
             'entity' => 'division',
             'model' => 'App\Models\Division',
-            'attribute' => 'name'
+            'attribute' => 'name',
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            })
+
         ]);
 
         $this->crud->field([
@@ -168,7 +175,10 @@ class FuntionalQualityObjectivesCrudController extends CrudController
             'name' => 'process_id',
             'entity' => 'process',
             'model' => 'App\Models\Process',
-            'attribute' => 'name'
+            'attribute' => 'name',
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            })
         ]);
 
         $this->crud->field([

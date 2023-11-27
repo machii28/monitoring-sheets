@@ -25,7 +25,7 @@ class ProcessRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required'
+             'name' => 'required|exists:processes,name'
         ];
     }
 
@@ -49,7 +49,7 @@ class ProcessRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'exists' => 'Process Already Exists'
         ];
     }
 }

@@ -83,6 +83,20 @@ class UserCrudController extends CrudController
             $this->crud->field('password')
                 ->remove();
         }
+
+        $this->crud->removeSaveActions([
+            'save_and_back',
+            'save_and_edit',
+            'save_and_preview'
+        ]);
+
+        $this->crud->replaceSaveActions([
+            'name' => 'save_and_new',
+            'button_text' => 'Save',
+            'redirect' => function ($crud, $request, $itemId) {
+                return $crud->route . '/create';
+            }
+        ]);
     }
 
     /**
@@ -93,6 +107,35 @@ class UserCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(UserRequest::class);
+
+        CRUD::setFromDb(); // set fields from db columns.
+
+        CRUD::field('role')
+            ->type('select_from_array')
+            ->label('User Role')
+            ->options(config('user_roles'));
+
+        $this->crud->field('position')
+            ->remove();
+
+        if (Request::route()->getName() === 'user.edit') {
+            $this->crud->field('password')
+                ->remove();
+        }
+
+        $this->crud->removeSaveActions([
+            'save_and_back',
+            'save_and_new',
+            'save_and_preview'
+        ]);
+
+        $this->crud->replaceSaveActions([
+            'name' => 'save_and_edit',
+            'button_text' => 'Save',
+            'redirect' => function ($crud, $request, $itemId) {
+                return $crud->route . "/$itemId/edit";
+            }
+        ]);
     }
 }

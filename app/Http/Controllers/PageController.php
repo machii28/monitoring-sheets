@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AssignedMonitoringSheet;
 use App\Models\MonitoringSheet;
 use App\Models\MonitoringSheetAnswer;
+use App\Models\Question;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
@@ -109,5 +110,17 @@ class PageController extends Controller
         $assignedMonitoringSheet->save();
 
         return redirect()->back();
+    }
+
+    public function updateQuestion($questionId, Request $request)
+    {
+        $question = Question::where('id', $questionId)->first();
+
+        $question->question = $request->question;
+        $question->save();
+
+        return response()->json([
+            'message' => 'Success'
+        ]);
     }
 }

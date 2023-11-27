@@ -133,7 +133,7 @@ class RiskRegisterCrudController extends CrudController
         $this->crud->field([
             'label' => 'Category',
             'type' => 'text',
-            'value' => 'Functional Quality Objectives',
+            'value' => 'Risk Register',
             'name' => 'category',
             'attributes' => [
                 'disabled' => true,
@@ -146,7 +146,11 @@ class RiskRegisterCrudController extends CrudController
             'name' => 'division_id',
             'entity' => 'division',
             'model' => 'App\Models\Division',
-            'attribute' => 'name'
+            'attribute' => 'name',
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            })
+
         ]);
 
         $this->crud->field([
@@ -167,7 +171,10 @@ class RiskRegisterCrudController extends CrudController
             'name' => 'process_id',
             'entity' => 'process',
             'model' => 'App\Models\Process',
-            'attribute' => 'name'
+            'attribute' => 'name',
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            })
         ]);
 
         $this->crud->field([

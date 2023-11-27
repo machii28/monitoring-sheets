@@ -78,6 +78,10 @@ trait QuestionsOperation
 
     public function add($monitoringSheetId, Request $request)
     {
+        $request->validate([
+            'question' => 'required'
+        ]);
+
         $question = new Question();
         $question->question = $request->get('question');
         $question->monitoring_sheet_id = $monitoringSheetId;

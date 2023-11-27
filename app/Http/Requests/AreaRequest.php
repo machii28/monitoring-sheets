@@ -25,7 +25,7 @@ class AreaRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required|exists:divisions,name'
         ];
     }
 
@@ -37,7 +37,6 @@ class AreaRequest extends FormRequest
     public function attributes()
     {
         return [
-            //
         ];
     }
 
@@ -49,7 +48,7 @@ class AreaRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'exists' => 'Area already exists'
         ];
     }
 }

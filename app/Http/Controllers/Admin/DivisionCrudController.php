@@ -21,7 +21,7 @@ class DivisionCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -33,7 +33,7 @@ class DivisionCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -49,7 +49,7 @@ class DivisionCrudController extends CrudController
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -57,7 +57,19 @@ class DivisionCrudController extends CrudController
     {
         CRUD::setValidation(DivisionRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
+        $this->crud->removeSaveActions([
+            'save_and_back',
+            'save_and_edit',
+            'save_and_preview'
+        ]);
 
+        $this->crud->replaceSaveActions([
+            'name' => 'save_and_new',
+            'button_text' => 'Save',
+            'redirect' => function ($crud, $request, $itemId) {
+                return $crud->route . '/create';
+            }
+        ]);
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
@@ -66,12 +78,26 @@ class DivisionCrudController extends CrudController
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(DivisionRequest::class);
+        CRUD::setFromDb();
+        $this->crud->removeSaveActions([
+            'save_and_back',
+            'save_and_new',
+            'save_and_preview'
+        ]);
+
+        $this->crud->replaceSaveActions([
+            'name' => 'save_and_edit',
+            'button_text' => 'Save',
+            'redirect' => function ($crud, $request, $itemId) {
+                return $crud->route . "/$itemId/edit";
+            }
+        ]);
     }
 }

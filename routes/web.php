@@ -56,5 +56,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approve'])->name('po.approve');
     Route::post('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approveCheckedBy'])->name('po.post.approve');
 });
+Route::post('/{questionId}/update-question', [PageController::class, 'updateQuestion'])->name('po.update-question');
 
 require __DIR__.'/auth.php';

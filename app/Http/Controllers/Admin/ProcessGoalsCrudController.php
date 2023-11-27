@@ -125,14 +125,19 @@ class ProcessGoalsCrudController extends CrudController
     {
         CRUD::setValidation(MonitoringSheetRequest::class);
 
+        CRUD::setValidation(MonitoringSheetRequest::class);
+
         $this->crud->field([
             'label' => 'Category',
             'type' => 'text',
-            'value' => 'Functional Quality Objectives',
+            'value' => 'Process Goal',
             'name' => 'category',
             'attributes' => [
                 'disabled' => true,
-            ]
+            ],
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            })
         ]);
 
         $this->crud->field([
@@ -141,7 +146,11 @@ class ProcessGoalsCrudController extends CrudController
             'name' => 'division_id',
             'entity' => 'division',
             'model' => 'App\Models\Division',
-            'attribute' => 'name'
+            'attribute' => 'name',
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            })
+
         ]);
 
         $this->crud->field([
@@ -162,7 +171,10 @@ class ProcessGoalsCrudController extends CrudController
             'name' => 'process_id',
             'entity' => 'process',
             'model' => 'App\Models\Process',
-            'attribute' => 'name'
+            'attribute' => 'name',
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            })
         ]);
 
         $this->crud->field([

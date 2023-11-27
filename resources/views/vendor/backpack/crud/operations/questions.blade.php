@@ -16,7 +16,17 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <form action="{{ route('monitoring-sheet.add-question', ['monitoringSheetId' => $monitoringSheetId]) }}" method="POST">
+                        @if($errors->has('question'))
+                            @foreach($errors->all() as $error)
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $error }}
+                                </div>
+                            @endforeach
+                        @endif
+
+                        <form
+                            action="{{ route('monitoring-sheet.add-question', ['monitoringSheetId' => $monitoringSheetId]) }}"
+                            method="POST">
                             {{ csrf_field() }}
 
                             <input type="hidden" name="monitoring_sheet_id" value="{{ $monitoringSheetId }}">
@@ -45,17 +55,26 @@
                     <div class="card-body">
                         <table class="table table-striped">
                             <thead>
-                                <th>Question</th>
-                                <th>Action</th>
+                            <th>Question</th>
+                            <th>Action</th>
                             </thead>
                             <tbody>
                             @foreach ($questions as $question)
                                 <tr>
-                                    <td>{{ $question->question }}</td>
                                     <td>
-                                        <form method="POST" action="{{ route('monitoring-sheet.remove-question', ['questionId' => $question->id]) }}">
+                                        <p class="text-display">{{ $question->question }}</p>
+                                        <input type="text" class="edit-input" style="display: none;" value="{{ $question->question }}">
+                                        <input type="hidden" class="edit-input-id" value="{{ $question->id }}">
+                                        <button type="button" class="btn btn-sm btn-link save-btn"
+                                                style="display: none;">Save
+                                        </button>
+                                    </td>
+                                    <td class="action-buttons">
+                                        <form method="POST"
+                                              action="{{ route('monitoring-sheet.remove-question', ['questionId' => $question->id]) }}">
                                             {{ csrf_field() }}
                                             {{ method_field('POST') }}
+                                            <button type="button" class="btn btn-sm btn-link edit-btn">Edit</button>
                                             <button type="submit" class="btn btn-sm btn-link">Remove</button>
                                         </form>
                                     </td>
@@ -67,5 +86,52 @@
                 </div>
             </div>
         </div>
+
+
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const editButtons = document.querySelectorAll('.edit-btn');
+            const saveButtons = document.querySelectorAll('.save-btn');
+            const editInputs = document.querySelectorAll('.edit-input');
+            const display = document.querySelectorAll('.text-display');
+            const editInputId = document.querySelectorAll('.edit-input-id');
+
+            editButtons.forEach((editBtn, index) => {
+                editBtn.addEventListener('click', function () {
+                    editInputs[index].style.display = 'inline-block';
+                    saveButtons[index].style.display = 'inline-block';
+                    display[index].style.display = 'none';
+                    editButtons[index].style.display = 'none';
+                });
+
+                saveButtons[index].addEventListener('click', function () {
+                    const question = editInputs[index].value;
+                    const id = editInputId[index].value;
+
+                    // For demonstration purposes, let's log the updated question.
+                    $.ajax({
+                        type: 'POST',
+                        url: '/' + id + '/update-question',
+                        data: {
+                            question: question
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+
+                    display[index].textContent = question;
+                    editInputs[index].style.display = 'none';
+                    saveButtons[index].style.display = 'none';
+                    display[index].style.display = 'inline-block';
+                    editButtons[index].style.display = 'inline-block';
+                });
+            });
+        });
+    </script>
 @endsection

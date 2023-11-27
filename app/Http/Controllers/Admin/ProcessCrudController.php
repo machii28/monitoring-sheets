@@ -56,7 +56,20 @@ class ProcessCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(ProcessRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+        CRUD::setFromDb();
+        $this->crud->removeSaveActions([
+            'save_and_back',
+            'save_and_edit',
+            'save_and_preview'
+        ]);
+
+        $this->crud->replaceSaveActions([
+            'name' => 'save_and_new',
+            'button_text' => 'Save',
+            'redirect' => function ($crud, $request, $itemId) {
+                return $crud->route . '/create';
+            }
+        ]);
 
         /**
          * Fields can be defined using the fluent syntax:
@@ -72,6 +85,20 @@ class ProcessCrudController extends CrudController
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        CRUD::setValidation(ProcessRequest::class);
+        CRUD::setFromDb();
+        $this->crud->removeSaveActions([
+            'save_and_back',
+            'save_and_new',
+            'save_and_preview'
+        ]);
+
+        $this->crud->replaceSaveActions([
+            'name' => 'save_and_edit',
+            'button_text' => 'Save',
+            'redirect' => function ($crud, $request, $itemId) {
+                return $crud->route . "/$itemId/edit";
+            }
+        ]);
     }
 }
