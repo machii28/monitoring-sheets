@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        @if (auth()->user()->role === 'po')
+        @if (auth()->user()->role !== 'Quality Assurance Officer' && auth()->user()->role !== 'Campus Executive Director/QMR')
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">

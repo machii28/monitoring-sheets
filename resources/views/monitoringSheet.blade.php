@@ -2,22 +2,21 @@
 
 $logo = '/images/logo.png';
 $preparedBySignature = $assignedMonitoringSheet->prepared_by_signature
-    ? str_replace('public/', '/', $assignedMonitoringSheet->prepared_by_signature)
+    ? str_replace('public/', '/storage/', $assignedMonitoringSheet->prepared_by_signature)
     : '';
 $checkedBySignature = $assignedMonitoringSheet->checked_by_signature
-    ? str_replace('public/', '/', $assignedMonitoringSheet->checked_by_signature)
+    ? str_replace('public/', '/storage/', $assignedMonitoringSheet->checked_by_signature)
     : '';
-
 
 if ($assignedMonitoringSheet['print']) {
     $logo = getcwd() . $logo;
     $preparedBySignature = $assignedMonitoringSheet->prepared_by_signature
-    ? str_replace('storage/public', 'storage/app/public', storage_path($assignedMonitoringSheet->prepared_by_signature))
+    ? str_replace('storage\public', '/storage/app/public', storage_path($assignedMonitoringSheet->prepared_by_signature))
     : '';
     $checkedBySignature = $assignedMonitoringSheet->checked_by_signature
-    ? str_replace('storage/public', 'storage/app/public', storage_path($assignedMonitoringSheet->checked_by_signature))
+    ? str_replace('storage\public', '/storage/app/public', storage_path($assignedMonitoringSheet->checked_by_signature))
     : '';
-}
+    }
 
 @endphp
 
@@ -251,7 +250,7 @@ if ($assignedMonitoringSheet['print']) {
     .ritz .waffle .s16 {
         border-right: 2px SOLID #000000;
         background-color: #ffffff;
-        text-align: center;
+        #text-align: center;
         font-weight: bold;
         color: #ff0000;
         font-family: 'Arial';
@@ -338,7 +337,7 @@ if ($assignedMonitoringSheet['print']) {
     .ritz .waffle .s17 {
         border-right: 2px SOLID #000000;
         background-color: #ffffff;
-        text-align: center;
+        #text-align: center;
         font-weight: bold;
         color: #000000;
         font-family: 'Arial';
@@ -413,28 +412,30 @@ if ($assignedMonitoringSheet['print']) {
         @endforeach
         <tr style="height: 19px">
             <td class="s16" colspan="3">
+                <p style="color: black; font-weight: lighter; margin-bottom: 10px">Prepared By:</p>
                 @if ($assignedMonitoringSheet->prepared_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
                          src="{{ $preparedBySignature }}"
                          height="100" width="150" alt="">
                 @endif
-                <div style="display: block">
-                    {{ auth()->user()->name }}
+                <div style="display: block; text-align: center;">
+                    {{ $assignedMonitoringSheet->processOwner->name }}
                 </div>
             </td>
             <td class="s17" colspan="3">
+                <p style="color: black; font-weight: lighter; margin-bottom: 10px">Checked By:</p>
                 @if ($assignedMonitoringSheet->checked_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
                          src="{{ $checkedBySignature }}"
                          height="100" width="150" alt="">
                 @endif
-                <div style="display: block">
+                <div style="display: block; text-align: center;">
                     {{ \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->name }}
                 </div>
             </td>
         </tr>
         <tr style="height: 18px">
-            <td class="s18" colspan="3">{{ auth()->user()->role }}</td>
+            <td class="s18" colspan="3">{{ $assignedMonitoringSheet->processOwner->role }}</td>
             <td class="s19" colspan="3">{{
                  \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->role
               }}</td>

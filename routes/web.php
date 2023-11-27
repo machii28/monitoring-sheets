@@ -47,7 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/{monitoringSheetId}/submit-answer', [PageController::class, 'submitAnswer'])->name('po.submit-answer.monitoring-sheet');
 
     Route::post('/creagia/sign-pad', LaravelSignPadController::class)->name('sign-pad::signature');
-    Route::get('{monitoringSheetId}/print/{poId}', [PageController::class, 'print'])->name('po.print');
 
     Route::get('fqo', [QMRController::class, 'fqo'])->name('fqo');
     Route::get('pg', [QMRController::class, 'pg'])->name('pg');
@@ -56,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approve'])->name('po.approve');
     Route::post('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approveCheckedBy'])->name('po.post.approve');
 });
+Route::get('{monitoringSheetId}/print/{poId}', [PageController::class, 'print'])->name('po.print');
 Route::post('/{questionId}/update-question', [PageController::class, 'updateQuestion'])->name('po.update-question');
 
 require __DIR__.'/auth.php';

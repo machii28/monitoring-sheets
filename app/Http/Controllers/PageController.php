@@ -57,7 +57,7 @@ class PageController extends Controller
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
 
-            $data = $file->storeAs('public/signatures', $fileName);
+            $data = $file->storeAs('storage/signatures', $fileName);
 
             $assignedMonitoringSheet->prepared_by_signature = $data;
         }
@@ -78,7 +78,7 @@ class PageController extends Controller
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('print', [
             'assignedMonitoringSheet' => $assignedMonitoringSheet
-        ])->setPaper('a4', 'landscape');
+        ])->setPaper('A4', 'landscape');
 
         return $pdf->stream('monitoring_sheet.pdf');
     }

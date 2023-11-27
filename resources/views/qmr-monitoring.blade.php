@@ -11,7 +11,7 @@
                 <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
                     <thead class="bg-gray-800 text-white">
                         <tr class="text-center">
-                            <th class="px-4 py-2">Position</th>
+                            <th class="px-4 py-2">Role</th>
                             <th class="px-4 py-2">Name</th>
                             <th class="px-4 py-2">Year Quarter</th>
                             <th class="px-4 py-2">Date Submitted</th>
@@ -21,7 +21,7 @@
                     <tbody class="text-gray-700">
                         @foreach($monitoringSheets as $monitoringSheet)
                             <tr class="text-center">
-                                <td class="px-4 py-2">{{ $monitoringSheet->processOwner->position }}</td>
+                                <td class="px-4 py-2">{{ $monitoringSheet->processOwner->role }}</td>
                                 <td class="px-4 py-2">{{ $monitoringSheet->processOwner->name }}</td>
                                 <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->year_quarter }}</td>
                                 <td class="px-4 py-2">{{ $monitoringSheet->updated_at }}</td>

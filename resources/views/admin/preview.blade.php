@@ -334,8 +334,9 @@
                     <tbody>
                     <tr style="height: 100px">
                         <td class="s2">
-                            <div style="width:110px;height:100px;"><img
-                                    src="https://lh7-us.googleusercontent.com/sheets/ACTFsxQq7ZGQT_yfmE5OVqKV7OUXx_CxDywALwTVQCAFotb1-eZAHH3mxl149JetcNyf7D1_B4gS3DKeU4fc0JmzD1IJ0enMvi5MeUrRNmlx1bvRWLPCR0jS-6Gi6Yk0TngKkpb6bPk2kUf6rwgiWM-bSaNa0guacfUKJ4dVZhkJOg8FyM_NAYVyGkRjCQU9tB9h4OCajqjCwmLzWYWjEbPQradR9AhArZfRt_9lIeVnhU9RCwkd470TNb4veGt0Gci4iVo-YJRRSUWxtoctyBVnlRRySg-eLAMXjx1-MtWSv5kuV7Z_CqWgaK1wrwkZnRJ8wwCY1w5Ti83j2sR1DwV6FhIriRLGErGzvPmac2TW2DfZI5s04dNkmGqDhilkPJ4J5YBzMf388YIyCQl63cLeSw3NqkQIk3q-jmTukCqzIEtDQJakkKk-zYSSNCX5gaV7cbXKkJeqZFeQrqoSHeXIoGHL56O60Pbuq3MqC81mJXWtUmqQsukE5S_TvCwtwe2C0VBrsbJIf_Gw6yTh2tVMNvatKpRoaOQYW4FMMeSjPks4qO3b0SU3ofwcCpKNC_gBZcT_fHbdaEBt5wP8F5QUvMBhg7GBLSMQ1aHpPXSlHN5JowbxnWDVrP9b0TEGn4gLZDi-FR915yXEenmmpy7A0mCujK_-YRnWUbBjifyjaRNloLlmr4MZRdunM0abWei5UwwQHLUE6P2p21EmLvPDdvIoph5PDKhVLxkg-vlOqd157uFqpTFLTxCV5mNJcM8XmADwJs8BO_F5akvCjUz2HHJvE8oZfGFe2D-QFvs1UI96ksIUOlgceoB3maWu5JrblbRSv-TCRU2toAB50FkMv87_SkV2XNEgDMsB7XkYY3_WpymZMcmihT7H2xDsmU2PkjwIIJkbQ0Qa543KYc1hPd0QMiifLCn1OV-ByaR6bl1ljTNBeSXZhKWs2LpEkdIgXqtQ3qbNp2_gZPnK5wAOcNaAZqPcCa7sDAzbPTaZQOmG-NDL6xzSsyJW3YostSeE7blNB-TqvEGSjhqKkU9rvvIBOL3uQ8dQFDWgPPXED8H2WkUsBSKkR7WAUfhTr3Ymnn0yQ9v0qPKGpxw5mqcQnoOOwt-AyGfd22I=w110-h100"
+                            <div style="width:110px;height:100px;">
+                            <img
+                                    src="/images/logo.png"
                                     style="width:inherit;height:inherit;object-fit:scale-down;object-position:left top;"/>
                             </div>
                         </td>

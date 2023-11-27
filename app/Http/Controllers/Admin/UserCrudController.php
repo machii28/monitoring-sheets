@@ -71,6 +71,10 @@ class UserCrudController extends CrudController
 
         CRUD::setFromDb(); // set fields from db columns.
 
+        CRUD::field('name')
+            ->type('text')
+            ->label('Name (FIRST NAME MIDDLE NAME LAST NAME EXTENSION NAME)');
+
         CRUD::field('role')
             ->type('select_from_array')
             ->label('User Role')

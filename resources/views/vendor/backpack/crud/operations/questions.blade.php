@@ -32,7 +32,7 @@
                             <input type="hidden" name="monitoring_sheet_id" value="{{ $monitoringSheetId }}">
 
                             <div class="mb-3">
-                                <label for="question" class="form-label">Question</label>
+                                <label for="question" class="form-label">Target</label>
                                 <input type="text" name="question" id="question" class="form-control">
                             </div>
 
@@ -55,8 +55,8 @@
                     <div class="card-body">
                         <table class="table table-striped">
                             <thead>
-                            <th>Question</th>
-                            <th>Action</th>
+                                <th>Target</th>
+                                <th>Action</th>
                             </thead>
                             <tbody>
                             @foreach ($questions as $question)
