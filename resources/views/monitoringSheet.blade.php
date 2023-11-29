@@ -16,6 +16,7 @@ if ($assignedMonitoringSheet['print']) {
     $checkedBySignature = $assignedMonitoringSheet->checked_by_signature
     ? str_replace('storage\public', '/storage/app/public', storage_path($assignedMonitoringSheet->checked_by_signature))
     : '';
+
     }
 
 @endphp
@@ -380,7 +381,7 @@ if ($assignedMonitoringSheet['print']) {
             <td class="s6">PROCESS</td>
             <td class="s6" colspan="3">Colleges</td>
             <td class="s6">DATE SUBMITTED</td>
-            <td class="s7"></td>
+            <td class="s5">{{ Carbon\Carbon::parse($assignedMonitoringSheet->updated_at)->format('Y-m-d') }}</td>
         </tr>
         <tr style="height: 29px">
             <td class="s8" colspan="6">QUARTERLY ACCOMPLISHMENT REPORT</td>

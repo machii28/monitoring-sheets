@@ -1,7 +1,7 @@
 @extends(backpack_view('blank'))
 
 @php
-    $submittedSheets = \App\Models\AssignedMonitoringSheet::where('is_filled_up', false)->count();
+    $submittedSheets = \App\Models\AssignedMonitoringSheet::where('is_filled_up', true)->count();
     $totalSheets = \App\Models\AssignedMonitoringSheet::count();
     $progress = $totalSheets ? ($submittedSheets/$totalSheets) * 100 : 0;
 

@@ -57,7 +57,7 @@ class PageController extends Controller
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
 
-            $data = $file->storeAs('storage/signatures', $fileName);
+            $data = $file->storeAs('public/signatures', $fileName);
 
             $assignedMonitoringSheet->prepared_by_signature = $data;
         }
@@ -74,7 +74,6 @@ class PageController extends Controller
             ->where('assigned_id', $poId)
             ->first();
         $assignedMonitoringSheet['print'] = true;
-
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('print', [
             'assignedMonitoringSheet' => $assignedMonitoringSheet

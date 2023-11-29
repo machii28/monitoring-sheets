@@ -33,7 +33,7 @@ class ProcessGoalsCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\MonitoringSheet::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/process-goals');
-        CRUD::setEntityNameStrings('PG', 'PG');
+        CRUD::setEntityNameStrings('PG', 'Process Goal');
     }
 
     public function store()

@@ -32,7 +32,7 @@ class RiskRegisterCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\MonitoringSheet::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/risk-register');
-        CRUD::setEntityNameStrings('RR', 'RR');
+        CRUD::setEntityNameStrings('RR', 'Risk Register');
     }
 
     public function store()

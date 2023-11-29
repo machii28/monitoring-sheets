@@ -33,7 +33,7 @@ class FuntionalQualityObjectivesCrudController extends CrudController
     {
         CRUD::setModel(\App\Models\MonitoringSheet::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/funtional-quality-objectives');
-        CRUD::setEntityNameStrings('FQO', 'FQO');
+        CRUD::setEntityNameStrings('FQO', 'Functional Quality Objective');
     }
 
     public function store()
