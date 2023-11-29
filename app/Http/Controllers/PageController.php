@@ -8,9 +8,61 @@ use App\Models\MonitoringSheetAnswer;
 use App\Models\Question;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Assign;
 
 class PageController extends Controller
 {
+    public function dashboard(Request $request)
+    {
+        $nonFilledUpMonitoringSheets = \App\Models\AssignedMonitoringSheet::where('assigned_id', auth()->id())
+                                    ->where('is_filled_up', 0)
+                                    ->count();
+
+        $filledUpMonitoringSheets = \App\Models\AssignedMonitoringSheet::where('assigned_id', auth()->id())
+                                        ->where('is_filled_up', 1)
+                                        ->count();
+
+        $totalMonitoringSheetsProgress = (AssignedMonitoringSheet::where('is_filled_up', true)->count() / AssignedMonitoringSheet::count()) * 100;
+        $totalFQOProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'rr');
+                })->count() ? (
+                AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'fqo');
+                })->where('is_filled_up', true)->count() /
+                AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'fqo');
+                })->count()
+        ) * 100 : 0;
+        $totalRRProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'rr');
+                })->count() ? (
+                AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'rr');
+                })->where('is_filled_up', true)->count() /
+                AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'rr');
+                })->count()
+        ) * 100 : 0;
+        $totalPGProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'rr');
+                })->count() ? (
+                AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'pg');
+                })->where('is_filled_up', true)->count() /
+                AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
+                    $query->where('category', 'pg');
+                })->count()
+        ) * 100 : 0;
+
+        return view('dashboard', [
+            'filled_up_count' => $filledUpMonitoringSheets,
+            'non_filled_up_count' => $nonFilledUpMonitoringSheets,
+            'total_monitoring_sheets_progress' => $totalMonitoringSheetsProgress,
+            'total_fqo_progress' => $totalFQOProgress,
+            'total_rr_progress' => $totalRRProgress,
+            'total_pg_progress' => $totalPGProgress
+        ]);
+    }
     public function monitoringSheets(Request $request)
     {
         $data = [];

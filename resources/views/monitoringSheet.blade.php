@@ -367,27 +367,27 @@ if ($assignedMonitoringSheet['print']) {
         </tr>
         <tr style="height: 19px">
             <td class="s4">DIVISION</td>
-            <td class="s4" colspan="3">{{ $assignedMonitoringSheet->monitoringSheet->division->name }}</td>
+            <td class="s4">{{ $assignedMonitoringSheet->monitoringSheet->division->name }}</td>
             <td class="s4">YEAR / QUARTER</td>
-            <td class="s5">{{ $assignedMonitoringSheet->monitoringSheet->year_quarter }}</td>
+            <td class="s5" colspan="4">{{ $assignedMonitoringSheet->monitoringSheet->year_quarter }}</td>
         </tr>
         <tr style="height: 19px">
             <td class="s4">AREA</td>
-            <td class="s4" colspan="3">{{ $assignedMonitoringSheet->monitoringSheet->area->name }}</td>
+            <td class="s4">{{ $assignedMonitoringSheet->monitoringSheet->area->name }}</td>
             <td class="s4">COVERAGE PERIOD</td>
-            <td class="s5">{{ $assignedMonitoringSheet->monitoringSheet->coverage }}</td>
+            <td class="s5" colspan="4">{{ $assignedMonitoringSheet->monitoringSheet->coverage }}</td>
         </tr>
         <tr style="height: 19px">
             <td class="s6">PROCESS</td>
-            <td class="s6" colspan="3">Colleges</td>
+            <td class="s6">Colleges</td>
             <td class="s6">DATE SUBMITTED</td>
-            <td class="s5">{{ Carbon\Carbon::parse($assignedMonitoringSheet->updated_at)->format('Y-m-d') }}</td>
+            <td class="s5" colspan="4">{{ Carbon\Carbon::parse($assignedMonitoringSheet->updated_at)->format('Y-m-d') }}</td>
         </tr>
         <tr style="height: 29px">
             <td class="s8" colspan="6">QUARTERLY ACCOMPLISHMENT REPORT</td>
         </tr>
         <tr style="height: 18px">
-            <td class="s9 uppercase">{{ $assignedMonitoringSheet->monitoringSheet->category }}</td>
+            <td class="s9 uppercase">{{ strtoupper($assignedMonitoringSheet->monitoringSheet->category) }}</td>
             <td class="s9">TARGET</td>
             <td class="s9">STATUS</td>
             <td class="s9">REMARKS</td>
@@ -401,8 +401,8 @@ if ($assignedMonitoringSheet['print']) {
                             ->first();
             @endphp
             <tr style="height: 18px">
-                <td class="s9 uppercase">{{ $assignedMonitoringSheet->monitoringSheet->category }} #{{ $key + 1 }}</td>
-                <td class="s11" style="width: 100%">
+                <td class="s9 uppercase">{{ strtoupper($assignedMonitoringSheet->monitoringSheet->category) }} #{{ $key + 1 }}</td>
+                <td class="s11">
                     {{ $question->question }}
                 </td>
                 <td class="s9">{{ $answer ? $answer->status : '' }}</td>

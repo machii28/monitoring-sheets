@@ -21,20 +21,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    $nonFilledUpMonitoringSheets = \App\Models\AssignedMonitoringSheet::where('assigned_id', auth()->id())
-                                    ->where('is_filled_up', 0)
-                                    ->count();
-
-    $filledUpMonitoringSheets = \App\Models\AssignedMonitoringSheet::where('assigned_id', auth()->id())
-                                    ->where('is_filled_up', 1)
-                                    ->count();
-
-    return view('dashboard', [
-        'filled_up_count' => $filledUpMonitoringSheets,
-        'non_filled_up_count' => $nonFilledUpMonitoringSheets
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [
+    PageController::class, 'dashboard'
+])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

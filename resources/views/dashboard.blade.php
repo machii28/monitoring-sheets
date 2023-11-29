@@ -39,7 +39,55 @@
                 </div>
             </div>
         @else
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white shadow-lg shadow-slate-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400 text-sm text-slate-500">Total Assigned Monitoring Sheets</span>
+	                        <span class="px-2 py-1 bg-teal-50 rounded-lg text-xs text-teal-400 font-medium min-w-[46px] text-center">
+                                {{ $total_monitoring_sheets_progress }}%
+                            </span>
+                        </div>
 
+                        <div class="w-full bg-slate-100 h-1 mb-6 mt-2">
+                            <div class="bg-blue-400 h-1 rounded" style="width: {{ $total_monitoring_sheets_progress }}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white shadow-lg shadow-slate-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400 text-sm text-slate-500">Total FQO Monitoring Sheets</span>
+	                        <span class="px-2 py-1 bg-teal-50 rounded-lg text-xs text-teal-400 font-medium min-w-[46px] text-center">{{ $total_fqo_progress }}%</span>
+                        </div>
+
+                        <div class="w-full bg-slate-100 h-1 mb-6 mt-2">
+                            <div class="bg-blue-400 h-1 rounded" style="width: {{ $total_fqo_progress }}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white shadow-lg shadow-slate-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400 text-sm text-slate-500">Total Assigned RR Sheets</span>
+	                        <span class="px-2 py-1 bg-teal-50 rounded-lg text-xs text-teal-400 font-medium min-w-[46px] text-center">{{ $total_rr_progress }}%</span>
+                        </div>
+
+                        <div class="w-full bg-slate-100 h-1 mb-6 mt-2">
+                            <div class="bg-blue-400 h-1 rounded" style="width: {{ $total_rr_progress }}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white shadow-lg shadow-slate-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400 text-sm text-slate-500">Total Assigned PG Sheets</span>
+	                        <span class="px-2 py-1 bg-teal-50 rounded-lg text-xs text-teal-400 font-medium min-w-[46px] text-center">{{ $total_pg_progress }}%</span>
+                        </div>
+
+                        <div class="w-full bg-slate-100 h-1 mb-6 mt-2">
+                            <div class="bg-blue-400 h-1 rounded" style="width: {{ $total_pg_progress }}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endif
     </div>
 </x-app-layout>
