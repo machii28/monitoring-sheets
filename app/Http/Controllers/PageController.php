@@ -22,7 +22,8 @@ class PageController extends Controller
                                         ->where('is_filled_up', 1)
                                         ->count();
 
-        $totalMonitoringSheetsProgress = (AssignedMonitoringSheet::where('is_filled_up', true)->count() / AssignedMonitoringSheet::count()) * 100;
+        $totalMonitoringSheetsProgress = AssignedMonitoringSheet::count() ?
+         (AssignedMonitoringSheet::where('is_filled_up', true)->count() / AssignedMonitoringSheet::count()) * 100 : 0;
         $totalFQOProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'rr');
                 })->count() ? (
@@ -44,7 +45,7 @@ class PageController extends Controller
                 })->count()
         ) * 100 : 0;
         $totalPGProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
-                    $query->where('category', 'rr');
+                    $query->where('category', 'pg');
                 })->count() ? (
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'pg');
@@ -129,7 +130,7 @@ class PageController extends Controller
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('print', [
             'assignedMonitoringSheet' => $assignedMonitoringSheet
-        ])->setPaper('A4', 'landscape');
+        ])->setPaper('a4', 'landscape');
 
         return $pdf->stream('monitoring_sheet.pdf');
     }
