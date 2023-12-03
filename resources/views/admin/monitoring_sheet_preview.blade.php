@@ -369,7 +369,7 @@ $checkedBySignature = $assignedMonitoringSheet->checked_by_signature
                     </tr>
                     <tr style="height: 19px">
                         <td class="s6">PROCESS</td>
-                        <td class="s6" colspan="3">Colleges</td>
+                        <td class="s6" colspan="3">{{ $assignedMonitoringSheet->monitoringSheet->process->name }}</td>
                         <td class="s6">DATE SUBMITTED</td>
                         <td class="s7"></td>
                     </tr>

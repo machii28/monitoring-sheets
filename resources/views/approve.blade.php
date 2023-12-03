@@ -23,7 +23,7 @@
                     @csrf
                     <div class="mb-4">
                         <label for="file" class="block text-gray-700 font-bold mb-2">Upload Signature:</label>
-                        <input type="file" name="file" id="file" class="border rounded px-4 py-2 w-full">
+                        <input type="file" name="file" id="file" class="border rounded px-4 py-2 w-full" required>
                     </div>
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Approve
