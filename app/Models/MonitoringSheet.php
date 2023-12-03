@@ -103,20 +103,19 @@ class MonitoringSheet extends Model
             $yearQuarter = '1st Quarter - ' . now()->format('Y');
 
             switch ($model->coverage) {
-                case 1:
+                case '1st Quarter':
                     $yearQuarter = '1st Quarter - ' . now()->format('Y');
                     break;
-                case 2:
+                case '2nd Quarter':
                     $yearQuarter = '2nd Quarter - ' . now()->format('Y');
                     break;
-                case 3:
+                case '3rd Quarter':
                     $yearQuarter = '3rd Quarter - ' . now()->format('Y');
                     break;
-                case 4:
+                case '4th Quarter':
                     $yearQuarter = '4th Quarter - '. now()->format('Y');
                     break;
             }
-
             $model->year_quarter = $yearQuarter;
 
         });
@@ -125,22 +124,20 @@ class MonitoringSheet extends Model
             $yearQuarter = '1st Quarter - ' . now()->format('Y');
 
             switch ($model->coverage) {
-                case 1:
+                case '1st Quarter':
                     $yearQuarter = '1st Quarter - ' . now()->format('Y');
                     break;
-                case 2:
+                case '2nd Quarter':
                     $yearQuarter = '2nd Quarter - ' . now()->format('Y');
                     break;
-                case 3:
+                case '3rd Quarter':
                     $yearQuarter = '3rd Quarter - ' . now()->format('Y');
                     break;
-                case 4:
+                case '4th Quarter':
                     $yearQuarter = '4th Quarter - '. now()->format('Y');
                     break;
             }
-
             $model->year_quarter = $yearQuarter;
-
         });
     }
 }
