@@ -26,10 +26,20 @@
                                 <td class="px-4 py-2">{{ $monitoringSheet->monitoringSheet->year_quarter }}</td>
                                 <td class="px-4 py-2">{{ $monitoringSheet->updated_at }}</td>
                                 <td class="px-4 py-2">
-                                    <a href="{{ route('po.approve', ['monitoringSheetId' => $monitoringSheet->monitoringSheet->id, 'poId' => $monitoringSheet->assigned_id]) }}"
-                                       class="text-xs text-indigo-700 text-center">
-                                        Approve
-                                    </a>
+                                    @if (!$monitoringSheet->is_approved)
+                                        <a href="{{ route('po.approve', ['monitoringSheetId' => $monitoringSheet->monitoringSheet->id, 'poId' => $monitoringSheet->assigned_id]) }}"
+                                           class="text-xs text-indigo-700 text-center">
+                                            Approve
+                                        </a>
+                                    @else
+                                        <a target="_blank" href="{{ route('po.print', [
+                                            'monitoringSheetId' => $monitoringSheet->monitoringSheet->id,
+                                            'poId' => $monitoringSheet->assigned_id
+                                        ]) }}"
+                                           class="text-xs text-indigo-700 text-center">
+                                            Print
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
