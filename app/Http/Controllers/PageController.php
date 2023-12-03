@@ -93,6 +93,32 @@ class PageController extends Controller
                                     ->first();
 
         foreach ($request->get('answers') as $questionId => $answer) {
+            if (!$request->get('save_and_exit')) {
+                if (!$answer['status']) {
+                    return redirect()->back()->withErrors([
+                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
+                    ]);
+                }
+
+                if (!$answer['remarks']) {
+                    return redirect()->back()->withErrors([
+                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
+                    ]);
+                }
+
+                if (!$answer['root_cause']) {
+                    return redirect()->back()->withErrors([
+                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
+                    ]);
+                }
+
+                if (!$answer['corrective_action']) {
+                    return redirect()->back()->withErrors([
+                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
+                    ]);
+                }
+            }
+
             MonitoringSheetAnswer::updateOrCreate([
                 'assigned_monitoring_sheet_id' => $assignedMonitoringSheet->id,
                 'question_id' => $questionId
@@ -151,6 +177,12 @@ class PageController extends Controller
         $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
             ->where('assigned_id', $poId)
             ->first();
+
+        if (!$request->hasFile('file')) {
+            return redirect()->back()->withErrors([
+                'message' => 'Please provide signature'
+            ]);
+        }
 
         $file = $request->file('file');
         $fileName = $file->getClientOriginalName();

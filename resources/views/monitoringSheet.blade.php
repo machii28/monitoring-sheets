@@ -352,7 +352,7 @@ if ($assignedMonitoringSheet['print']) {
     }
 </style>
 <div class="ritz grid-container" dir="ltr">
-    <table class="waffle" cellspacing="0" cellpadding="0">
+    <table class="waffle" style="border-spacing: 0px;">
         <tbody>
         <tr style="height: 100px">
             <td class="s2">
