@@ -101,7 +101,7 @@ if ($assignedMonitoringSheet['print']) {
 
     .ritz .waffle .s10 {
         border-bottom: 1px SOLID #000000;
-        border-right: 2px SOLID #000000;
+        border-right: 1px SOLID #000000;
         background-color: #ffffff;
         text-align: center;
         font-weight: bold;
@@ -134,7 +134,7 @@ if ($assignedMonitoringSheet['print']) {
 
     .ritz .waffle .s5 {
         border-bottom: 1px SOLID #000000;
-        border-right: 2px SOLID #000000;
+        border-right: 1px SOLID #000000;
         background-color: #ffffff;
         text-align: left;
         font-weight: bold;
@@ -151,7 +151,7 @@ if ($assignedMonitoringSheet['print']) {
 
     .ritz .waffle .s8 {
         border-bottom: 2px SOLID #000000;
-        border-right: 2px SOLID #000000;
+        border-right: 1px SOLID #000000;
         background-color: #ffffff;
         text-align: center;
         font-weight: bold;
@@ -167,7 +167,7 @@ if ($assignedMonitoringSheet['print']) {
     }
 
     .ritz .waffle .s18 {
-        border-bottom: 2px SOLID #000000;
+        border-bottom: 1px SOLID #000000;
         border-right: 2px SOLID #000000;
         background-color: #ffffff;
         text-align: center;
@@ -200,8 +200,8 @@ if ($assignedMonitoringSheet['print']) {
     }
 
     .ritz .waffle .s19 {
-        border-bottom: 2px SOLID #000000;
-        border-right: 2px SOLID #000000;
+        border-bottom: 1px SOLID #000000;
+        border-right: 1px SOLID #000000;
         background-color: #ffffff;
         text-align: center;
         color: #000000;
@@ -216,7 +216,7 @@ if ($assignedMonitoringSheet['print']) {
     }
 
     .ritz .waffle .s3 {
-        border: 2px solid black;
+        border: 1px solid black;
         background-color: #ffffff;
         text-align: center;
         font-weight: bold;
@@ -336,7 +336,7 @@ if ($assignedMonitoringSheet['print']) {
     }
 
     .ritz .waffle .s17 {
-        border-right: 2px SOLID #000000;
+        border-right: 1px SOLID #000000;
         background-color: #ffffff;
         #text-align: center;
         font-weight: bold;
@@ -360,7 +360,7 @@ if ($assignedMonitoringSheet['print']) {
                     <img src="{{ $logo }}" width="100px" height="100px"/>
                 </div>
             </td>
-            <td class="s3" style="border-right: 2px solid black;" colspan="5">
+            <td class="s3" style="border-right: 1px solid black;" colspan="7">
                 MONITORING SHEET
                 - {{ $assignedMonitoringSheet->monitoringSheet->getFormattedCategoryAttribute() }}<br><span
                     style="font-size:11pt;font-family:Arial;font-weight:bold;color:#000000;">PANGASINAN STATE UNIVERSITY<br>San Carlos City Campus</span>
@@ -368,32 +368,45 @@ if ($assignedMonitoringSheet['print']) {
         </tr>
         <tr style="height: 19px">
             <td class="s4">DIVISION</td>
-            <td class="s4">{{ $assignedMonitoringSheet->monitoringSheet->division->name }}</td>
+            <td class="s4" colspan="4">{{ $assignedMonitoringSheet->monitoringSheet->division->name }}</td>
             <td class="s4">YEAR / QUARTER</td>
-            <td class="s5" colspan="4">{{ $assignedMonitoringSheet->monitoringSheet->year_quarter }}</td>
+            <td class="s5" colspan="4"  >{{ $assignedMonitoringSheet->monitoringSheet->year_quarter }}</td>
         </tr>
         <tr style="height: 19px">
             <td class="s4">AREA</td>
-            <td class="s4">{{ $assignedMonitoringSheet->monitoringSheet->area->name }}</td>
+            <td class="s4" colspan="4">{{ $assignedMonitoringSheet->monitoringSheet->area->name }}</td>
             <td class="s4">COVERAGE PERIOD</td>
-            <td class="s5" colspan="4">{{ $assignedMonitoringSheet->monitoringSheet->coverage }}</td>
+            <td class="s5" colspan="4">
+    @if($assignedMonitoringSheet->monitoringSheet->coverage === '1st Quarter')
+        January-March
+    @elseif($assignedMonitoringSheet->monitoringSheet->coverage === '2nd Quarter')
+        April-June
+    @elseif($assignedMonitoringSheet->monitoringSheet->coverage === '3rd Quarter')
+        July-September
+    @elseif($assignedMonitoringSheet->monitoringSheet->coverage === '4th Quarter')
+        October-December
+    @else
+        Unknown Coverage
+    @endif
+</td>
+
         </tr>
         <tr style="height: 19px">
             <td class="s6">PROCESS</td>
-            <td class="s6">Colleges</td>
+            <td class="s6" colspan="4">{{ $assignedMonitoringSheet->monitoringSheet->process->name}}</td>
             <td class="s6">DATE SUBMITTED</td>
             <td class="s5" style="border-bottom: 2px solid black;" colspan="4">{{ Carbon\Carbon::parse($assignedMonitoringSheet->updated_at)->format('Y-m-d') }}</td>
         </tr>
         <tr style="height: 29px">
-            <td class="s8" colspan="6">QUARTERLY ACCOMPLISHMENT REPORT</td>
+            <td class="s8" colspan="8">QUARTERLY ACCOMPLISHMENT REPORT</td>
         </tr>
         <tr style="height: 18px">
             <td class="s9 uppercase">{{ strtoupper($assignedMonitoringSheet->monitoringSheet->category) }}</td>
-            <td class="s9">TARGET</td>
+            <td class="s9" colspan="2">TARGET</td>
             <td class="s9">STATUS</td>
             <td class="s9">REMARKS</td>
             <td class="s9">ROOT CAUSE</td>
-            <td class="s10">CORRECTIVE ACTION</td>
+            <td class="s10" colspan="3">CORRECTIVE ACTION</td>
         </tr>
         @foreach($assignedMonitoringSheet->monitoringSheet->questions as $key => $question)
             @php
@@ -403,18 +416,18 @@ if ($assignedMonitoringSheet['print']) {
             @endphp
             <tr style="height: 18px">
                 <td class="s9 uppercase">{{ strtoupper($assignedMonitoringSheet->monitoringSheet->category) }} #{{ $key + 1 }}</td>
-                <td class="s11">
+                <td class="s11" colspan="2">
                     {{ $question->question }}
                 </td>
-                <td class="s9">{{ $answer ? $answer->status : '' }}</td>
+                <td class="s9" >{{ $answer ? $answer->status : '' }}</td>
                 <td class="s9">{{ $answer ? $answer->remarks : '' }}</td>
                 <td class="s9">{{ $answer ? $answer->root_cause : '' }}</td>
-                <td class="s10">{{ $answer ? $answer->corrective_action : '' }}</td>
+                <td class="s10" colspan="3">{{ $answer ? $answer->corrective_action : '' }}</td>
             </tr>
         @endforeach
         <tr style="height: 19px">
-            <td class="s16" style="text-align: center;" colspan="3">
-                <p style="color: black; font-weight: lighter; margin-bottom: 10px">Prepared By:</p>
+            <td class="s16" style="text-align: center;" colspan="4">
+                <p style="color: black; font-weight: lighter; margin-bottom: 10px; margin-left: -420px;">Prepared By:</p>
                 @if ($assignedMonitoringSheet->prepared_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
                          src="{{ $preparedBySignature }}"
@@ -424,8 +437,8 @@ if ($assignedMonitoringSheet['print']) {
                     {{ $assignedMonitoringSheet->processOwner->name }}
                 </div>
             </td>
-            <td class="s17" style="text-align: center;" colspan="3">
-                <p style="color: black; font-weight: lighter; margin-bottom: 10px">Checked By:</p>
+            <td class="s17" style="text-align: center;" colspan="4">
+                <p style="color: black; font-weight: lighter; margin-bottom: 10px; margin-left: -420px;">Checked By:</p>
                 @if ($assignedMonitoringSheet->checked_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
                          src="{{ $checkedBySignature }}"
@@ -437,8 +450,8 @@ if ($assignedMonitoringSheet['print']) {
             </td>
         </tr>
         <tr style="height: 18px">
-            <td class="s18" colspan="3">{{ $assignedMonitoringSheet->processOwner->role }}</td>
-            <td class="s19" colspan="3">{{
+            <td class="s18" colspan="4">{{ $assignedMonitoringSheet->processOwner->role }}</td>
+            <td class="s19" colspan="4">{{
                  \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->role
               }}</td>
         </tr>

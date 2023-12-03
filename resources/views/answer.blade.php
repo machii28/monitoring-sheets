@@ -216,13 +216,7 @@
             });
 
             buttonSubmit.addEventListener('click', function () {
-            const requiredFields = answerForm.querySelectorAll('input[required]');
-            for (const field of requiredFields) {
-            if (!field.value) {
-                 alert(`Please fill in the required field`);
-            return; 
-             }
-             }
+            
              answerForm.submit();
             });
 
