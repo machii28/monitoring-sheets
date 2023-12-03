@@ -24,8 +24,9 @@ if ($assignedMonitoringSheet['print']) {
 <link type="text/css" rel="stylesheet" href="resources/sheet.css">
 <style>
     .ritz .waffle {
-        border: 2px SOLID #000000;
+        border: 2px SOLID black !important;
         width: 100%;
+        border-spacing: -1px;
     }
 
     .ritz .waffle a {
@@ -215,8 +216,7 @@ if ($assignedMonitoringSheet['print']) {
     }
 
     .ritz .waffle .s3 {
-        border-bottom: 2px SOLID #000000;
-        border-right: 2px SOLID #000000;
+        border: 2px solid black;
         background-color: #ffffff;
         text-align: center;
         font-weight: bold;
@@ -360,7 +360,8 @@ if ($assignedMonitoringSheet['print']) {
                     <img src="{{ $logo }}" width="100px" height="100px"/>
                 </div>
             </td>
-            <td class="s3" colspan="5">MONITORING SHEET
+            <td class="s3" style="border-right: 2px solid black;" colspan="5">
+                MONITORING SHEET
                 - {{ $assignedMonitoringSheet->monitoringSheet->getFormattedCategoryAttribute() }}<br><span
                     style="font-size:11pt;font-family:Arial;font-weight:bold;color:#000000;">PANGASINAN STATE UNIVERSITY<br>San Carlos City Campus</span>
             </td>
@@ -381,7 +382,7 @@ if ($assignedMonitoringSheet['print']) {
             <td class="s6">PROCESS</td>
             <td class="s6">Colleges</td>
             <td class="s6">DATE SUBMITTED</td>
-            <td class="s5" colspan="4">{{ Carbon\Carbon::parse($assignedMonitoringSheet->updated_at)->format('Y-m-d') }}</td>
+            <td class="s5" style="border-bottom: 2px solid black;" colspan="4">{{ Carbon\Carbon::parse($assignedMonitoringSheet->updated_at)->format('Y-m-d') }}</td>
         </tr>
         <tr style="height: 29px">
             <td class="s8" colspan="6">QUARTERLY ACCOMPLISHMENT REPORT</td>
@@ -412,7 +413,7 @@ if ($assignedMonitoringSheet['print']) {
             </tr>
         @endforeach
         <tr style="height: 19px">
-            <td class="s16" colspan="3">
+            <td class="s16" style="text-align: center;" colspan="3">
                 <p style="color: black; font-weight: lighter; margin-bottom: 10px">Prepared By:</p>
                 @if ($assignedMonitoringSheet->prepared_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
@@ -423,7 +424,7 @@ if ($assignedMonitoringSheet['print']) {
                     {{ $assignedMonitoringSheet->processOwner->name }}
                 </div>
             </td>
-            <td class="s17" colspan="3">
+            <td class="s17" style="text-align: center;" colspan="3">
                 <p style="color: black; font-weight: lighter; margin-bottom: 10px">Checked By:</p>
                 @if ($assignedMonitoringSheet->checked_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
