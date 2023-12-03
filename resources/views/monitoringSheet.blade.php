@@ -164,6 +164,7 @@ if ($assignedMonitoringSheet['print']) {
         word-wrap: break-word;
         direction: ltr;
         padding: 0px 3px 0px 3px;
+        height: 18;
     }
 
     .ritz .waffle .s18 {
@@ -197,6 +198,7 @@ if ($assignedMonitoringSheet['print']) {
         word-wrap: break-word;
         direction: ltr;
         padding: 0px 3px 0px 3px;
+        height: 20;
     }
 
     .ritz .waffle .s19 {
@@ -228,12 +230,12 @@ if ($assignedMonitoringSheet['print']) {
         overflow: hidden;
         word-wrap: break-word;
         direction: ltr;
-        padding: 0px 3px 0px 3px;
+        padding: 0px 3px 0px 25px;
     }
 
     .ritz .waffle .s4 {
         border-bottom: 1px SOLID #000000;
-        border-right: 1px SOLID #000000;
+        border-right: 2px SOLID #000000;
         background-color: #ffffff;
         text-align: left;
         font-weight: bold;
@@ -246,6 +248,8 @@ if ($assignedMonitoringSheet['print']) {
         word-wrap: break-word;
         direction: ltr;
         padding: 0px 3px 0px 3px;
+        height:15;
+        
     }
 
     .ritz .waffle .s16 {
@@ -304,7 +308,7 @@ if ($assignedMonitoringSheet['print']) {
 
     .ritz .waffle .s6 {
         border-bottom: 2px SOLID #000000;
-        border-right: 1px SOLID #000000;
+        border-right: 2px SOLID #000000;
         background-color: #ffffff;
         text-align: left;
         font-weight: bold;
@@ -317,6 +321,8 @@ if ($assignedMonitoringSheet['print']) {
         word-wrap: break-word;
         direction: ltr;
         padding: 0px 3px 0px 3px;
+        border-top: 1px solid;
+        height: 15;
     }
 
     .ritz .waffle .s11 {
@@ -360,7 +366,7 @@ if ($assignedMonitoringSheet['print']) {
                     <img src="{{ $logo }}" width="100px" height="100px"/>
                 </div>
             </td>
-            <td class="s3" style="border-right: 1px solid black;" colspan="7">
+            <td class="s3" style="border-right: 2px solid black;" colspan="7">
                 MONITORING SHEET
                 - {{ $assignedMonitoringSheet->monitoringSheet->getFormattedCategoryAttribute() }}<br><span
                     style="font-size:11pt;font-family:Arial;font-weight:bold;color:#000000;">PANGASINAN STATE UNIVERSITY<br>San Carlos City Campus</span>
@@ -438,7 +444,7 @@ if ($assignedMonitoringSheet['print']) {
                 </div>
             </td>
             <td class="s17" style="text-align: center;" colspan="4">
-                <p style="color: black; font-weight: lighter; margin-bottom: 10px; margin-left: -420px;">Checked By:</p>
+                <p style="color: black; font-weight: lighter; margin-bottom: 10px; margin-left: -350px;">Checked By:</p>
                 @if ($assignedMonitoringSheet->checked_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
                          src="{{ $checkedBySignature }}"
