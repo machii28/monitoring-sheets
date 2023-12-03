@@ -22,7 +22,7 @@ class PageController extends Controller
                                         ->where('is_filled_up', 1)
                                         ->count();
 
-        $totalMonitoringSheetsProgress = AssignedMonitoringSheet::count() ?
+        $totalMonitoringSheetsProgress = AssignedMonitoringSheet::count() !== 0 ?
          (AssignedMonitoringSheet::where('is_filled_up', true)->count() / AssignedMonitoringSheet::count()) * 100 : 0;
         $totalFQOProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'rr');
@@ -36,7 +36,7 @@ class PageController extends Controller
         ) * 100 : 0;
         $totalRRProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'rr');
-                })->count() ? (
+                })->count() !== 0 ? (
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'rr');
                 })->where('is_filled_up', true)->count() /
@@ -46,7 +46,7 @@ class PageController extends Controller
         ) * 100 : 0;
         $totalPGProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'pg');
-                })->count() ? (
+                })->count() !== 0 ? (
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'pg');
                 })->where('is_filled_up', true)->count() /
