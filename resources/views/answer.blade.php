@@ -86,7 +86,7 @@
 
                             <div class="mb-4">
                                 <label for="file" class="block text-gray-700 font-bold mb-2">Upload Signature:</label>
-                                <input type="file" name="file" id="file" class="border rounded px-4 py-2 w-full" required>
+                                <input type="file" name="file" id="file" class="border rounded px-4 py-2 w-full">
                             </div>
                         </div>
 
@@ -108,7 +108,7 @@
                                             <div class="mt-3">
                                                 <input name="answers[{{ $question->id }}][status]" type="text"
                                                        value="{{ $answer ? $answer->status : '' }}"
-                                                       class="w-full rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500" required>
+                                                       class="w-full rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500">
                                             </div>
                                         </div>
                                         <div class="p-4 border">
@@ -116,7 +116,7 @@
                                             <div class="mt-3">
                                                 <input name="answers[{{ $question->id }}][remarks]" type="text"
                                                        value="{{ $answer ? $answer->remarks : '' }}"
-                                                       class="w-full rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500" required>
+                                                       class="w-full rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500">
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
                                             <div class="mt-3">
                                                 <input name="answers[{{ $question->id }}][root_cause]" type="text"
                                                        value="{{ $answer ? $answer->root_cause : '' }}"
-                                                       class="w-full rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500" required>
+                                                       class="w-full rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500">
                                             </div>
                                         </div>
                                         <div class="p-4 border">
@@ -136,7 +136,7 @@
                                                 <input name="answers[{{ $question->id }}][corrective_action]"
                                                        type="text"
                                                        value="{{ $answer ? $answer->corrective_action : '' }}"
-                                                       class="w-full rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500" required>
+                                                       class="w-full rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500">
                                             </div>
                                         </div>
                                     </div>
@@ -216,10 +216,8 @@
             });
 
             buttonSubmit.addEventListener('click', function () {
-            
-             answerForm.submit();
+                answerForm.submit();
             });
-
         });
     </script>
 </x-app-layout>

@@ -433,7 +433,7 @@ if ($assignedMonitoringSheet['print']) {
         @endforeach
         <tr style="height: 19px">
             <td class="s16" style="text-align: center;" colspan="4">
-                <p style="color: black; font-weight: lighter; margin-bottom: 10px; margin-left: -420px;">Prepared By:</p>
+                <p style="color: black; font-weight: lighter; margin-bottom: 10px; text-align: left;">Prepared By:</p>
                 @if ($assignedMonitoringSheet->prepared_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
                          src="{{ $preparedBySignature }}"
@@ -444,7 +444,7 @@ if ($assignedMonitoringSheet['print']) {
                 </div>
             </td>
             <td class="s17" style="text-align: center;" colspan="4">
-                <p style="color: black; font-weight: lighter; margin-bottom: 10px; margin-left: -350px;">Checked By:</p>
+                <p style="color: black; font-weight: lighter; margin-bottom: 10px; text-align: left;">Checked By:</p>
                 @if ($assignedMonitoringSheet->checked_by_signature)
                     <img style="margin: auto; z-index: 9999999; display: block"
                          src="{{ $checkedBySignature }}"
