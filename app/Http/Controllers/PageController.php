@@ -6,6 +6,9 @@ use App\Models\AssignedMonitoringSheet;
 use App\Models\MonitoringSheet;
 use App\Models\MonitoringSheetAnswer;
 use App\Models\Question;
+use App\Models\User;
+use App\Notifications\FormApprovedNotification;
+use App\Notifications\FormFilledUpNotification;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Assign;
@@ -15,45 +18,45 @@ class PageController extends Controller
     public function dashboard(Request $request)
     {
         $nonFilledUpMonitoringSheets = \App\Models\AssignedMonitoringSheet::where('assigned_id', auth()->id())
-                                    ->where('is_filled_up', 0)
-                                    ->count();
+            ->where('is_filled_up', 0)
+            ->count();
 
         $filledUpMonitoringSheets = \App\Models\AssignedMonitoringSheet::where('assigned_id', auth()->id())
-                                        ->where('is_filled_up', 1)
-                                        ->count();
+            ->where('is_filled_up', 1)
+            ->count();
 
         $totalMonitoringSheetsProgress = AssignedMonitoringSheet::count() !== 0 ?
-         (AssignedMonitoringSheet::where('is_filled_up', true)->count() / AssignedMonitoringSheet::count()) * 100 : 0;
+            (AssignedMonitoringSheet::where('is_filled_up', true)->count() / AssignedMonitoringSheet::count()) * 100 : 0;
         $totalFQOProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
-                    $query->where('category', 'rr');
-                })->count() ? (
+            $query->where('category', 'rr');
+        })->count() ? (
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'fqo');
                 })->where('is_filled_up', true)->count() /
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'fqo');
                 })->count()
-        ) * 100 : 0;
+            ) * 100 : 0;
         $totalRRProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
-                    $query->where('category', 'rr');
-                })->count() !== 0 ? (
+            $query->where('category', 'rr');
+        })->count() !== 0 ? (
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'rr');
                 })->where('is_filled_up', true)->count() /
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'rr');
                 })->count()
-        ) * 100 : 0;
+            ) * 100 : 0;
         $totalPGProgress = AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
-                    $query->where('category', 'pg');
-                })->count() !== 0 ? (
+            $query->where('category', 'pg');
+        })->count() !== 0 ? (
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'pg');
                 })->where('is_filled_up', true)->count() /
                 AssignedMonitoringSheet::whereHas('monitoringSheet', function ($query) {
                     $query->where('category', 'pg');
                 })->count()
-        ) * 100 : 0;
+            ) * 100 : 0;
 
         return view('dashboard', [
             'filled_up_count' => $filledUpMonitoringSheets,
@@ -64,6 +67,7 @@ class PageController extends Controller
             'total_pg_progress' => $totalPGProgress
         ]);
     }
+
     public function monitoringSheets(Request $request)
     {
         $data = [];
@@ -77,8 +81,8 @@ class PageController extends Controller
     public function answer($monitoringSheetId)
     {
         $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
-                                ->where('assigned_id', auth()->id())
-                                ->first();
+            ->where('assigned_id', auth()->id())
+            ->first();
         $assignedMonitoringSheet['print'] = false;
 
         $data['assignedMonitoringSheet'] = $assignedMonitoringSheet;
@@ -89,35 +93,43 @@ class PageController extends Controller
     public function submitAnswer($monitoringSheetId, Request $request)
     {
         $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
-                                    ->where('assigned_id', auth()->id())
-                                    ->first();
+            ->where('assigned_id', auth()->id())
+            ->first();
+
+        if (!$request->get('save_and_exit')) {
+            if (!$request->hasFile('file')) {
+                return redirect()->back()->withErrors([
+                    'message' => 'Please provide a proper signature'
+                ]);
+            }
+        }
 
         foreach ($request->get('answers') as $questionId => $answer) {
-            if (!$request->get('save_and_exit')) {
-                if (!$answer['status']) {
-                    return redirect()->back()->withErrors([
-                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
-                    ]);
-                }
-
-                if (!$answer['remarks']) {
-                    return redirect()->back()->withErrors([
-                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
-                    ]);
-                }
-
-                if (!$answer['root_cause']) {
-                    return redirect()->back()->withErrors([
-                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
-                    ]);
-                }
-
-                if (!$answer['corrective_action']) {
-                    return redirect()->back()->withErrors([
-                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
-                    ]);
-                }
-            }
+//            if (!$request->get('save_and_exit')) {
+//                if (!$answer['status']) {
+//                    return redirect()->back()->withErrors([
+//                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
+//                    ]);
+//                }
+//
+//                if (!$answer['remarks']) {
+//                    return redirect()->back()->withErrors([
+//                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
+//                    ]);
+//                }
+//
+//                if (!$answer['root_cause']) {
+//                    return redirect()->back()->withErrors([
+//                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
+//                    ]);
+//                }
+//
+//                if (!$answer['corrective_action']) {
+//                    return redirect()->back()->withErrors([
+//                        'message' => 'Please fill-up the fields before submitting the monitoring sheets'
+//                    ]);
+//                }
+//            }
 
             MonitoringSheetAnswer::updateOrCreate([
                 'assigned_monitoring_sheet_id' => $assignedMonitoringSheet->id,
@@ -144,6 +156,17 @@ class PageController extends Controller
         $assignedMonitoringSheet->is_filled_up = !$request->get('save_and_exit');
         $assignedMonitoringSheet->save();
 
+        $admins = User::whereIn('role', ['Quality Assurance Officer', 'Campus Executive Director/QMR'])->get();
+
+        $data = [
+            'assigned_monitoring_sheet' => $assignedMonitoringSheet,
+            'process_owner' => auth()->user()
+        ];
+
+        foreach ($admins as $admin) {
+            $admin->notify(new FormFilledUpNotification($data));
+        }
+
         return redirect()->route('po.monitoring-sheets', ['monitoringSheetId' => $monitoringSheetId]);
     }
 
@@ -163,13 +186,25 @@ class PageController extends Controller
 
     public function approve($monitoringSheetId, $poId)
     {
-         $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
+        $assignedMonitoringSheet = AssignedMonitoringSheet::where('monitoring_sheet_id', $monitoringSheetId)
             ->where('assigned_id', $poId)
             ->first();
 
-         return view('approve', [
-             'assignedMonitoringSheet' => $assignedMonitoringSheet
-         ]);
+        $admins = User::where('role', 'Quality Assurance Officer')->get();
+
+        $data = [
+            'assigned_monitoring_sheet' => $assignedMonitoringSheet,
+            'approver' => auth()->user(),
+            'process_owner' => User::find($poId)
+        ];
+
+        foreach ($admins as $admin) {
+            $admin->notify(new FormApprovedNotification($data));
+        }
+
+        return view('approve', [
+            'assignedMonitoringSheet' => $assignedMonitoringSheet
+        ]);
     }
 
     public function approveCheckedBy($monitoringSheetId, $poId, Request $request)

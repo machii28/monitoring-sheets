@@ -30,4 +30,7 @@ Route::group([
     Route::crud('process-goals', 'ProcessGoalsCrudController');
     Route::get('/{monitoringSheetId}/{poId}/monitoring_sheet_preview', 'MonitoringSheetPreviewController@index')->name('page.monitoring_sheet_preview.index');
     Route::get('/{monitoringSheetId}/monitoring_sheet_preview', 'MonitoringSheetPreviewController@preview')->name('page.monitoring_sheet.preview');
+    Route::get('send-email', function() {
+        \Illuminate\Support\Facades\Mail::to('markcornelio28@gmail.com')->send(new \App\Mail\SendPassword('123456789'));
+    });
 }); // this should be the absolute last line of this file

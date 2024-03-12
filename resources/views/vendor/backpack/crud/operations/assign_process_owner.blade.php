@@ -21,8 +21,8 @@
                                 <label class="form-label">Process Owner</label>
 
                                 <select name="assigned_id" id="assigned_id" class="form-control">
-                                    @foreach($processOwnersSelection as $key => $processOwner)
-                                        <option value="{{ $key }}">{{ $processOwner }}</option>
+                                    @foreach($processOwnersSelection as $processOwner)
+                                        <option value="{{ $processOwner->id }}">{{ $processOwner->full_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -48,7 +48,7 @@
                             <tbody>
                                 @foreach($processOwners as $processOwner)
                                     <tr>
-                                        <td>{{ $processOwner->processOwner->name }}</td>
+                                        <td>{{ $processOwner->processOwner->full_name }}</td>
                                         <td>{{ $processOwner->id }}</td>
                                     </tr>
                                 @endforeach

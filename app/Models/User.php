@@ -22,23 +22,26 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'middle_initial',
+        'name_extension',
         'email',
         'password',
         'role',
         'position'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'area_id'
-    ];
+//    /**
+//     * The attributes that should be hidden for serialization.
+//     *
+//     * @var array<int, string>
+//     */
+//    protected $hidden = [
+//        'password',
+//        'remember_token',
+//        'area_id'
+//    ];
 
     /**
      * The attributes that should be cast.
@@ -74,5 +77,15 @@ class User extends Authenticatable
     public function getTotalAssignedMsAttribute()
     {
         return $this->totalAssignedMS();
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->last_name . ', ' . $this->first_name . ' ' . $this->middle_initial . '. ' . $this->name_extension;
+    }
+
+    public function showFullName()
+    {
+        return $this->fresh()->fullname;
     }
 }

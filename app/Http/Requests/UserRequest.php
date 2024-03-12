@@ -26,13 +26,10 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'  => 'required',
+            'first_name'  => 'required',
+            'last_name' => 'required',
             'email' => 'required|email',
         ];
-
-        if (Request::route()->getName() === 'user.create') {
-            $rules['password'] = 'required';
-        }
 
         return $rules;
     }
