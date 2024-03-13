@@ -10,7 +10,7 @@
         "backpack/theme-coreuiv2": "^1.2",
         "backpack/theme-coreuiv4": "^1.1",
         "backpack/theme-tabler": "^1.1",
-        "barryvdh/laravel-dompdf": "^2.0",
+        "barryvdh/laravel-dompdf": "^2.1",
         "creagia/laravel-sign-pad": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/breeze": "^1.23",

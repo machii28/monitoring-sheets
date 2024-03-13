@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Operations;
 
 use App\Models\AssignedMonitoringSheet;
 use App\Models\User;
+use App\Notifications\FormAssignedNotification;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -71,7 +72,7 @@ trait AssignProcessOwnerOperation
         $this->data['processOwnersSelection'] = User::whereNotIn('role', [
             'Quality Assurance Officer',
             'Campus Executive Director/QMR'
-        ])->pluck('name', 'id');
+        ])->get();
 
         // load the view
         return view('crud::operations.assign_process_owner', $this->data);
@@ -84,6 +85,8 @@ trait AssignProcessOwnerOperation
         $assigned->monitoring_sheet_id = $request->get('monitoring_sheet_id');
         $assigned->assigned_by = backpack_auth()->id();
         $assigned->save();
+
+        User::find($assigned->assigned_id)->notify(new FormAssignedNotification());
 
         Alert::success('<strong>Success !</strong> Monitoring Sheet Assigned')->flash();
 

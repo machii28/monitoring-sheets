@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserRequest;
+use App\Mail\SendPassword;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request as HttpRequest;
 
 /**
  * Class UserCrudController
@@ -15,7 +20,7 @@ use Illuminate\Support\Facades\Request;
 class UserCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation {store as traitStore;}
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -32,6 +37,20 @@ class UserCrudController extends CrudController
         CRUD::setEntityNameStrings('user', 'users');
     }
 
+    public function store()
+    {
+        Mail::to(request()->get('email'))->send(new SendPassword(request()->get('password')));
+
+        return $this->traitStore();
+    }
+
+    protected  function handlePassword($request, $password)
+    {
+        $request->request->set('password', $password);
+
+        return $request;
+    }
+
     /**
      * Define what happens when the List operation is loaded.
      *
@@ -42,8 +61,8 @@ class UserCrudController extends CrudController
     {
         $this->crud->addColumn([
             'name' => 'name',
-            'type' => 'text',
-            'label' => 'Name'
+            'type' => 'model_function',
+            'function_name' => 'showFullName'
         ]);
 
         $this->crud->addColumn([
@@ -69,11 +88,7 @@ class UserCrudController extends CrudController
     {
         CRUD::setValidation(UserRequest::class);
 
-        CRUD::setFromDb(); // set fields from db columns.
-
-        CRUD::field('name')
-            ->type('text')
-            ->label('Name (FIRST NAME MIDDLE NAME LAST NAME EXTENSION NAME)');
+        CRUD::setFromDb();
 
         CRUD::field('role')
             ->type('select_from_array')
@@ -101,6 +116,14 @@ class UserCrudController extends CrudController
                 return $crud->route . '/create';
             }
         ]);
+
+        CRUD::field('password')
+            ->type('text')
+            ->label('')
+            ->attributes([
+                'style' => 'display: none;'
+            ])
+            ->value(Str::random(12));
     }
 
     /**

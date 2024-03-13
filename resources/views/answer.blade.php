@@ -151,17 +151,17 @@
                     <div class="grid m-10 grid-cols-3">
                         <div class="mx-auto w-1/2">
                             <button type="button" id="answerFormButtonSubmit"
-                                    class="bg-indigo-400 rounded-md w-full text-white p-4 items-center">Submit
+                                    class="bg-gray-800 w-full text-white p-2 items-center">Submit
                             </button>
                         </div>
                         <div class="mx-auto w-1/2">
                             <button id="buttonSave" type="button"
-                                    class="bg-green-cool-500 rounded-md w-full text-white p-4 items-center">Save
+                                    class="bg-gray-600 w-full text-white p-2 items-center">Save
                             </button>
                         </div>
                         <div class="mx-auto w-1/2">
                             <button type="button" id="previewButton"
-                                    class="bg-blue-400 rounded-md w-full text-white p-4 items-center">Preview
+                                    class="bg-gray-500 w-full text-white p-2 items-center">Preview
                             </button>
                         </div>
                     </div>

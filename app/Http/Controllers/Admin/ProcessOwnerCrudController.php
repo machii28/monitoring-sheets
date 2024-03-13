@@ -68,7 +68,7 @@ class ProcessOwnerCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'role',
             'label' => 'Role',
-            'type' => 'text',
+            'type' => 'text',f
         ]);
 
         $this->crud->addColumn([
