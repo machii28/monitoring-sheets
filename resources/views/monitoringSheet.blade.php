@@ -440,7 +440,7 @@ if ($assignedMonitoringSheet['print']) {
                          height="100" width="150" alt="">
                 @endif
                 <div style="display: block; text-align: center;">
-                    {{ $assignedMonitoringSheet->processOwner->name }}
+                    {{ $assignedMonitoringSheet->processOwner->full_name }}
                 </div>
             </td>
             <td class="s17" style="text-align: center;" colspan="4">
@@ -451,7 +451,7 @@ if ($assignedMonitoringSheet['print']) {
                          height="100" width="150" alt="">
                 @endif
                 <div style="display: block; text-align: center;">
-                    {{ \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->name }}
+                    {{ \App\Models\User::where('role', 'Campus Executive Director/QMR')->first()->full_name }}
                 </div>
             </td>
         </tr>
