@@ -249,7 +249,7 @@ if ($assignedMonitoringSheet['print']) {
         direction: ltr;
         padding: 0px 3px 0px 3px;
         height:15;
-        
+
     }
 
     .ritz .waffle .s16 {
@@ -356,7 +356,36 @@ if ($assignedMonitoringSheet['print']) {
         direction: ltr;
         padding: 0px 3px 0px 3px;
     }
+
+    .series_number {
+        display: block;
+        color: black;
+        text-align: right;
+        font-style: italic;
+    }
+
+    .series_number p  {
+        margin-bottom: 10px;
+    }
+
+    .series_number p span {
+        display: block;
+    }
 </style>
+
+@if ($assignedMonitoringSheet['print'])
+<div class="series_number">
+    <p>
+        FM-TM-QMS-06a
+        <span>
+            Rev.0
+        </span>
+        <span>
+            02-May-2022
+        </span>
+    </p>
+</div>
+@endif
 <div class="ritz grid-container" dir="ltr">
     <table class="waffle" style="border-spacing: 0px;">
         <tbody>
