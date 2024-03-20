@@ -15,11 +15,13 @@
         @if($assignedMonitoringSheet->monitoringSheet)
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 @if ($errors->has('message'))
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5" role="alert">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-5"
+                         role="alert">
                         <strong class="font-bold">Error! </strong>
                         <span class="block sm:inline">{{ $errors->first('message') }}</span>
                         <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                            <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="fill-current h-6 w-6 text-red-500" role="button"
+                                 xmlns="http://www.w3.org/2000/svg"
                                  viewBox="0 0 20 20"><title>Close</title><path
                                     d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
                           </span>
@@ -62,14 +64,16 @@
                             <p class="font-semibold">Prepared By</p>
                             <p>
                                 {{ $assignedMonitoringSheet->monitoringSheet->prepared_by }}
-                                <span class="text-xs">{{ $assignedMonitoringSheet->monitoringSheet->prepared_by_role }}</span>
+                                <span
+                                    class="text-xs">{{ $assignedMonitoringSheet->monitoringSheet->prepared_by_role }}</span>
                             </p>
                         </div>
                         <div class="p-4">
                             <p class="font-semibold">Checked By</p>
                             <p>
                                 {{ $assignedMonitoringSheet->monitoringSheet->checked_by }}
-                                <span class="text-xs">{{ $assignedMonitoringSheet->monitoringSheet->checked_by_role }}</span>
+                                <span
+                                    class="text-xs">{{ $assignedMonitoringSheet->monitoringSheet->checked_by_role }}</span>
                             </p>
                         </div>
                     </div>
@@ -91,6 +95,13 @@
                         </div>
 
                         <div class="p-4">
+                            <div class="mx-auto w-1/2">
+                                <button id="addQuestionButton" type="button"
+                                        class="bg-blue-500 w-full text-white p-2 items-center">Add
+                                    Question
+                                </button>
+                            </div>
+
                             @foreach($assignedMonitoringSheet->monitoringSheet->questions as $key => $question)
                                 @php
                                     $answer = \App\Models\MonitoringSheetAnswer::where('assigned_monitoring_sheet_id', $assignedMonitoringSheet->monitoringSheet->id)
@@ -98,6 +109,10 @@
                                                 ->first();
                                 @endphp
                                 <div class="border m-2 p-4">
+                                    <button type="button"
+                                            class="bg-red-500 text-white px-4 py-2 rounded-md delete-button"
+                                            data-question-id="{{ $question->id }}">Delete
+                                    </button>
                                     <h3 class="text-center text-sm font-semibold uppercase">{{$assignedMonitoringSheet->monitoringSheet->category}}
                                         #{{ $key + 1 }}</h3>
                                     <h4 class="text-center font-semibold mt-2">{{ $question->question }}</h4>
@@ -191,6 +206,31 @@
         </div>
     @endif
 
+    <div id="addQuestionModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-10 transition-opacity"
+             style="--tw-bg-opacity: 0.65 !important">
+            <div class="modal-container bg-white mx-auto rounded shadow-lg z-50 overflow-y-auto bg-white max-w-7xl p-6">
+                <h2 class="text-2xl font-semibold mb-4">Add New Target</h2>
+                <form id="addQuestionForm" action="/question/add" method="POST">
+                    @csrf
+                    <input type="hidden" name="monitoring_sheet_id" value="{{ $assignedMonitoringSheet->monitoringSheet->id }}">
+                    <div class="mb-4">
+                        <label for="question" class="block text-gray-700 font-bold mb-2">Target:</label>
+                        <textarea id="question" name="question" rows="3"
+                                  class="border rounded w-full px-3 py-2"></textarea>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                        <button type="button" id="closeAddQuestionModal"
+                                class="bg-gray-400 text-white px-4 py-2 rounded ml-2">Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const previewButton = document.getElementById("previewButton");
@@ -217,6 +257,84 @@
 
             buttonSubmit.addEventListener('click', function () {
                 answerForm.submit();
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const deleteButtons = document.querySelectorAll('.delete-button');
+
+            deleteButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Find the question ID
+                    const questionId = button.dataset.questionId;
+
+                    // Create a form element
+                    const form = document.createElement('form');
+                    form.method = 'GET';
+                    form.action = `/questions/${questionId}/delete`;
+                    form.style.display = 'hidden';
+
+                    // Add CSRF token
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+
+                    // Add a method override input for DELETE request
+                    const methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'GET';
+                    form.appendChild(methodInput);
+
+                    // Append the form to the document body and submit it
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const addQuestionButton = document.getElementById("addQuestionButton");
+            const addQuestionModal = document.getElementById("addQuestionModal");
+            const closeAddQuestionModal = document.getElementById("closeAddQuestionModal");
+            const addQuestionForm = document.getElementById("addQuestionForm");
+
+            addQuestionButton.addEventListener("click", function () {
+                addQuestionModal.style.display = "block";
+            });
+
+            closeAddQuestionModal.addEventListener("click", function () {
+                addQuestionModal.style.display = "none";
+            });
+
+            addQuestionForm.addEventListener("submit", function (event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                // Submit the form using AJAX or fetch
+                // Example using fetch:
+                fetch("/question/add", {
+                    method: "POST",
+                    body: new FormData(addQuestionForm)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Handle success, maybe close the modal
+                            addQuestionModal.style.display = "none";
+
+                            window.location.reload();
+                            // Optionally, update the UI to show the newly added question
+                        } else {
+                            // Handle errors
+                        }
+                    })
+                    .catch(error => {
+                        // Handle network errors
+                    });
             });
         });
     </script>

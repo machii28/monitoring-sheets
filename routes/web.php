@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approve'])->name('po.approve');
     Route::post('/{monitoringSheetId}/approve/{poId}', [PageController::class, 'approveCheckedBy'])->name('po.post.approve');
+    Route::get('/questions/{questionId}/delete', [PageController::class, 'deleteTarget'])->name('target.delete');
+    Route::post('/question/add', [PageController::class, 'addTarget'])->name('target.add');
 });
 Route::get('{monitoringSheetId}/print/{poId}', [PageController::class, 'print'])->name('po.print');
 Route::post('/{questionId}/update-question', [PageController::class, 'updateQuestion'])->name('po.update-question');

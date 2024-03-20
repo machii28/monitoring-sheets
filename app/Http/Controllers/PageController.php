@@ -242,4 +242,21 @@ class PageController extends Controller
             'message' => 'Success'
         ]);
     }
+
+    public function deleteTarget($questionId)
+    {
+        $question = Question::where('id', $questionId)->delete();
+
+        return redirect()->back();
+    }
+
+    public function addTarget(Request $request)
+    {
+        $question = new Question();
+        $question->question = $request->get('question');
+        $question->monitoring_sheet_id = $request->get('monitoring_sheet_id');
+        $question->save();
+
+        return redirect()->back();
+    }
 }
