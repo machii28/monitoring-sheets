@@ -33,7 +33,7 @@
 
                             <div class="mb-3">
                                 <label for="question" class="form-label">Target</label>
-                                <input type="text" name="question" id="question" class="form-control">
+                                <textarea name="question" id="question" class="form-control"></textarea>
                             </div>
 
                             <button class="btn btn-primary">Add Target</button>

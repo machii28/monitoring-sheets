@@ -58,18 +58,21 @@ class AreaCrudController extends CrudController
     {
         CRUD::setValidation(AreaRequest::class);
         CRUD::setFromDb();
-        $this->crud->removeSaveActions([
-            'save_and_back',
-            'save_and_edit',
-            'save_and_preview'
-        ]);
-
         $this->crud->replaceSaveActions([
-            'name' => 'save_and_new',
-            'button_text' => 'Save',
-            'redirect' => function ($crud, $request, $itemId) {
-                return $crud->route . '/create';
-            }
+            [
+                'name' => 'save_and_new',
+                'button_text' => 'Save and New',
+                'redirect' => function ($crud, $request, $itemId) {
+                    return $crud->route . '/create';
+                }
+            ],
+            [
+                'name' => 'save_and_back',
+                'button_text' => 'Save and Back',
+                'redirect' => function ($crud, $request, $itemId) {
+                    return $crud->route;
+                }
+            ]
         ]);
         /**
          * Fields can be defined using the fluent syntax:
