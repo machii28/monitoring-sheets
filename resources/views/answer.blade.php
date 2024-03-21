@@ -265,33 +265,37 @@
 
             deleteButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
-                    // Find the question ID
-                    const questionId = button.dataset.questionId;
 
-                    // Create a form element
-                    const form = document.createElement('form');
-                    form.method = 'GET';
-                    form.action = `/questions/${questionId}/delete`;
-                    form.style.display = 'hidden';
+                    if (confirm("Are you sure you want to delete ?")) {
 
-                    // Add CSRF token
-                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
+                        // Find the question ID
+                        const questionId = button.dataset.questionId;
 
-                    // Add a method override input for DELETE request
-                    const methodInput = document.createElement('input');
-                    methodInput.type = 'hidden';
-                    methodInput.name = '_method';
-                    methodInput.value = 'GET';
-                    form.appendChild(methodInput);
+                        // Create a form element
+                        const form = document.createElement('form');
+                        form.method = 'GET';
+                        form.action = `/questions/${questionId}/delete`;
+                        form.style.display = 'hidden';
 
-                    // Append the form to the document body and submit it
-                    document.body.appendChild(form);
-                    form.submit();
+                        // Add CSRF token
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = '_token';
+                        csrfInput.value = csrfToken;
+                        form.appendChild(csrfInput);
+
+                        // Add a method override input for DELETE request
+                        const methodInput = document.createElement('input');
+                        methodInput.type = 'hidden';
+                        methodInput.name = '_method';
+                        methodInput.value = 'GET';
+                        form.appendChild(methodInput);
+
+                        // Append the form to the document body and submit it
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
                 });
             });
         });
